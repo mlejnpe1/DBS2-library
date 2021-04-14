@@ -1,0 +1,12 @@
+.content{
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+@media only screen and (max-width: 768px){
+    .content{
+        flex-direction: column;
+    }
+}
