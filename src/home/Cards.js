@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import faker from 'faker';
 import CardItem from '../home/CardItem';
+import {useQuery, gql} from '@apollo/client';
+import {LOAD_BOOKS} from '../graphql/queries';
 
 
 function Cards() {
+
+    const {error, loading, data} = useQuery(LOAD_BOOKS);
+
+    useEffect(() => {
+        console.log(data);
+    }, [data])
+
     return (
         <div className="cards">
             <h1>Check out our book sortiment!</h1>
