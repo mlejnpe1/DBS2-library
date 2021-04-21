@@ -1,12 +1,13 @@
 import React from 'react';
 import faker from 'faker';
 import CardItem from '../home/CardItem';
+import { Typography } from '@material-ui/core';
 
 
 function Cards() {
     return (
         <div className="cards">
-            <h1>Check out our book sortiment!</h1>
+            <Typography className="phrase-h3" variant="h3">Check out our book sortiment!</Typography>
             <div className="cards-divider"></div>
             <div className="cards-container">
                 <div className="cards-items">

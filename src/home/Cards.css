@@ -24,6 +24,9 @@
     align-items: center;
     margin: 2%;
 }
+.phrase-h3{
+    padding: 15px;
+}
 a{
     text-decoration: none;
     color: black;
