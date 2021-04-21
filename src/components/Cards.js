@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import faker from 'faker';
 import CardItem from '../home/CardItem';
 import { Typography } from '@material-ui/core';
+import CardItem from './CardItem';
+import {useQuery, gql} from '@apollo/client';
+import {LOAD_BOOKS} from '../graphql/queries';
 
 
 function Cards() {
+
+    const {error, loading, data} = useQuery(LOAD_BOOKS);
+
+    useEffect(() => {
+        console.log(data);
+    }, [data])
+
     return (
         <div className="cards">
             <Typography className="phrase-h3" variant="h3">Check out our book sortiment!</Typography>

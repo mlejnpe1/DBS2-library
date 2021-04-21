@@ -5,7 +5,7 @@ function CardItem(props) {
 
     return (
         <>
-        <a href="">
+        <a href="#">
             <div className="cards-item-wrap">
                 <img className="cards-item-image" alt="book cover" src={props.cover}/>
                 <div className="cards-item-info">

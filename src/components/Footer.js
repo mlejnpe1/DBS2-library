@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.css';
+import '../assets/Footer.css';
 import { Facebook, PhotoCamera, CreditCard } from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 
@@ -12,9 +12,9 @@ function Footer() {
                 <Typography>You can support us below</Typography>
                 <div className="footer-divider"></div>
                 <div className="footer-icons">
-                    <a href=""><CreditCard /></a>
-                    <a href=""><Facebook /></a>
-                    <a href=""><PhotoCamera /></a>
+                    <a href="#"><CreditCard /></a>
+                    <a href="#"><Facebook /></a>
+                    <a href="#"><PhotoCamera /></a>
                 </div>
             </div>
         </div>

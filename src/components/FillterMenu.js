@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, TextField, MenuItem, Select, InputLabel, FormControlLabel, Checkbox, Button} from '@material-ui/core';
-import './FillterMenu.css';
+import '../assets/FillterMenu.css';
 
 function FillterMenu() {
 
