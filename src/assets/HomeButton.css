@@ -1,0 +1,11 @@
+.home-button{
+    position: absolute;
+    right: 100px;
+    bottom: 50px; 
+}
+.home-button :hover{
+    transition: height 0.2s ease,
+                width 0.2s ease;
+    height: 100.5%;
+    width: 100.5%;
+}

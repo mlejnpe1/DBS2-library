@@ -91,8 +91,8 @@ const renderMenu = (
         open={isMenuOpen}
         onClose={handleMenuClose}
     >
-        <Link to="/login"><MenuItem onClick={handleMenuClose}>Profile</MenuItem></Link>
-        <Link to="/account"><MenuItem onClick={handleMenuClose}>My account</MenuItem></Link>
+        <Link to="/login"><MenuItem onClick={handleMenuClose}>Login</MenuItem></Link>
+        <Link to="/register"><MenuItem onClick={handleMenuClose}>Register</MenuItem></Link>
     </Menu>
 );
 
