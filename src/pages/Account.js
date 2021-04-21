@@ -1,10 +1,12 @@
 import React from 'react'
+import { Navbar } from '..'
 
 const Account = () => {
+
     return (
-        <div>
+        <>
             <h1>Heres your fucking account</h1>
-        </div>
+        </>
     )
 }
 
