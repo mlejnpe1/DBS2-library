@@ -2,6 +2,7 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Menu, MenuItem, InputBase, Typography, AppBar,Toolbar,IconButton } from '@material-ui/core';
 import { Search, AccountCircle } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 grow: {
@@ -90,8 +91,8 @@ const renderMenu = (
         open={isMenuOpen}
         onClose={handleMenuClose}
     >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <Link to="/login"><MenuItem onClick={handleMenuClose}>Profile</MenuItem></Link>
+        <Link to="/account"><MenuItem onClick={handleMenuClose}>My account</MenuItem></Link>
     </Menu>
 );
 

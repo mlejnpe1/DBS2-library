@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.css';
+import '../assets/Footer.css';
 import { Facebook, PhotoCamera, CreditCard } from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 

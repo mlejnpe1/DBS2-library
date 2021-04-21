@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './home/Home';
-import './index.css';
+import './assets/index.css';
 import {onError} from '@apollo/client/link/error';
 import {ApolloClient, ApolloProvider, from, HttpLink, InMemoryCache} from '@apollo/client';
+import { history } from './services/history';
+import { Router } from 'react-router';
+import { routes } from './router/routes'
 
 const errorLink = onError(({graphqlErrors, networkError}) => {
     if (graphqlErrors) {
@@ -23,6 +25,8 @@ const errorLink = onError(({graphqlErrors, networkError}) => {
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <Home />
+        <Router history={history}>
+            {routes}
+        </Router>
     </ApolloProvider>,document.getElementById('root')
 );

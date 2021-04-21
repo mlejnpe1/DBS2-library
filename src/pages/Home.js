@@ -2,9 +2,9 @@ import React from 'react';
 import Navbar from '../home/Navbar';
 import Cards from '../home/Cards';
 import Footer from '../home/Footer';
-import './Home.css'
-import './Cards.css'
-import FillterMenu from './FillterMenu';
+import '../assets/Home.css'
+import '../assets/Cards.css'
+import FillterMenu from '../home/FillterMenu';
 
 function Home() {
   return (
