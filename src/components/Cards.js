@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import faker from 'faker';
-import CardItem from '../home/CardItem';
+import CardItem from './CardItem';
 import {useQuery, gql} from '@apollo/client';
 import {LOAD_BOOKS} from '../graphql/queries';
 

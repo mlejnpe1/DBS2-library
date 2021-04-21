@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '../home/Navbar';
-import Cards from '../home/Cards';
-import Footer from '../home/Footer';
+import Navbar from '../components/Navbar';
+import Cards from '../components/Cards';
+import Footer from '../components/Footer';
 import '../assets/Home.css'
 import '../assets/Cards.css'
-import FillterMenu from '../home/FillterMenu';
+import FillterMenu from '../components/FillterMenu';
 
 function Home() {
   return (
