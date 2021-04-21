@@ -1,10 +1,30 @@
-import {gql} from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const LOAD_BOOKS = gql`
+  query {
+    books {
+      id
+      authorId
+    }
+  }
+`;
+
+export const LOAD_USER = (id) => gql`
     query {
-        books {
+        user(id:${id}) {
+        email
+        telNumber
+        username
+        reservations {
             id
-            authorId
+            publicationId
+            publication {
+            id
+            name
+            }
+            dateFrom
+            dateTo
+        }
         }
     }
-`
+`;
