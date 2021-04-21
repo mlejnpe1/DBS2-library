@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import faker from "faker";
-import CardItem from "./CardItem";
-import { useQuery } from "@apollo/client";
+import { Typography } from "@material-ui/core";
+import CardItem from "../components/CardItem";
+import { useQuery, gql } from "@apollo/client";
 import { LOAD_BOOKS } from "../graphql/queries";
 
 function Cards() {
@@ -13,7 +14,9 @@ function Cards() {
 
   return (
     <div className="cards">
-      <h1>Check out our book sortiment!</h1>
+      <Typography className="phrase-h3" variant="h3">
+        Check out our book sortiment!
+      </Typography>
       <div className="cards-divider"></div>
       <div className="cards-container">
         <div className="cards-items">

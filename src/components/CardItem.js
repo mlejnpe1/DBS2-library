@@ -1,4 +1,5 @@
-import React from 'react'
+import { Typography } from '@material-ui/core';
+import React from 'react';
 
 function CardItem(props) {
 
@@ -8,8 +9,8 @@ function CardItem(props) {
             <div className="cards-item-wrap">
                 <img className="cards-item-image" alt="book cover" src={props.cover}/>
                 <div className="cards-item-info">
-                    <h3 className="cards-item-Title">{props.title}</h3>
-                    <h4 className="cards-item-author" style={{"height" : "50px"}}>{props.author}</h4>
+                    <Typography variant="h5" className="cards-item-Title">{props.title}</Typography>
+                    <Typography variant="h7" className="cards-item-author" style={{"height" : "50px"}}>{props.author}</Typography>
                 </div>
             </div>
         </a> 
