@@ -2,9 +2,20 @@ import { gql } from "@apollo/client";
 
 export const LOAD_BOOKS = gql`
   query {
-    books {
+    publications {
+      name
       id
-      authorId
+      yearOfPub
+      bookId
+      category {
+        id
+        name
+      }
+      image {
+        fileExtension
+        id
+        img
+      }
     }
   }
 `;

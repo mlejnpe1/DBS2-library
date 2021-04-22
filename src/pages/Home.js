@@ -1,20 +1,20 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import Cards from '../components/Cards';
-import Footer from '../components/Footer';
-import '../assets/Home.css'
-import '../assets/Cards.css'
-import FillterMenu from '../components/FillterMenu';
+import React from "react";
+import Navbar from "../components/Navbar";
+import Cards from "../components/Cards";
+import Footer from "../components/Footer";
+import "../assets/Home.css";
+import "../assets/Cards.css";
+import FillterMenu from "../components/FilterMenu";
 
 function Home() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="content">
-        <FillterMenu/>
-        <Cards/>
+        <FillterMenu />
+        <Cards />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

@@ -1,16 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import faker from "faker";
 import { Typography } from "@material-ui/core";
 import CardItem from "../components/CardItem";
 import { useQuery, gql } from "@apollo/client";
-import { LOAD_BOOKS } from "../graphql/queries";
+import { LOAD_BOOKS, LOAD_USER } from "../graphql/queries";
 
 function Cards() {
   const { error, loading, data } = useQuery(LOAD_BOOKS);
+  const [publications, setPublications] = useState([]);
 
   useEffect(() => {
+    if (data) {
+      setPublications(data.publications);
+    }
     console.log(data);
   }, [data]);
+  console.log(error);
 
   return (
     <div className="cards">
@@ -19,83 +24,18 @@ function Cards() {
       </Typography>
       <div className="cards-divider"></div>
       <div className="cards-container">
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.animals()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.business()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.fashion()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.nightlife()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.people()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.food()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.technics()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.transport()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.city()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.animals()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
-        <div className="cards-items">
-          <CardItem
-            cover={faker.image.abstract()}
-            title={faker.name.title()}
-            author={faker.name.firstName() + " " + faker.name.lastName()}
-          />
-        </div>
+        {publications.map((book) => {
+          return (
+            <div className="cards-items">
+              <CardItem
+                key={book.bookId}
+                title={book.name}
+                author="unknown"
+                cover={faker.image.image()}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
