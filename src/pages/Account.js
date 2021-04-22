@@ -4,7 +4,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import "../assets/Account.css";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
 
 const formatDate = (d) => {
