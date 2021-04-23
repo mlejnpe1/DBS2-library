@@ -22,26 +22,23 @@ const PublicationDetail = (props) => {
   const [textReview, setTextReview] = useState("");
   const [reviews, setReviews] = useState([]);
 
-  const addReview = async (e, text, idPublication, uId) => {
+  const addReview = (e, text, idPublication, uId) => {
     e.preventDefault();
-    if (text) {
       console.log(text);
-      try {
-        /*const res = createReview({
+        const res = createReview({
           variables: {
             publicationId: idPublication,
             text: text,
             userId: uId,
             date: "2019-01-28T19:32:08.382Z",
           },
+        }).catch((res) => {
+          const errors = res.graphQLErrors.map((error) => {
+              return error.message;
+          });
+        }).then(review => {
+          console.log(review.data.createReview);
         });
-        console.log(res);*/
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      alert("Textové pole neobsahuje žádný text!");
-    }
   };
 
   useEffect(() => {
@@ -89,7 +86,7 @@ const PublicationDetail = (props) => {
           <Review user="Uživatel" date="Datum" />
         </div>
         <form
-          onSubmit={(event) => addReview(event, textReview, idPublication, 1)}
+          onSubmit={(event) => addReview(event, textReview, idPublication, 2)}
           id="insertReview"
         >
           <TextField
