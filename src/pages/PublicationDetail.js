@@ -3,29 +3,50 @@ import Navbar from "../components/Navbar";
 import TextField from "@material-ui/core/TextField";
 import faker from "faker";
 import Footer from "../components/Footer";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
 import Button from "@material-ui/core/Button";
 import { LOAD_BOOK } from "../graphql/queries";
+import { CREATE_REVIEW } from "../graphql/mutations";
 import { Typography } from "@material-ui/core";
 import Review from "../components/Review";
 
 const PublicationDetail = (props) => {
-  const id = parseInt(props.location.state.id);
+  const idPublication = parseInt(props.location.state.id); //String with ID has to be parse into Int, otherwise useQuery cannot fetch data and fails
   const { error, loading, data } = useQuery(LOAD_BOOK, {
-    variables: { id: 1 },
+    variables: { id: idPublication }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query
   });
-  const [publication, setPublication] = useState([]);
 
-  if (error) console.log(`Error! ${error.message}`);
+  const { createReview } = useMutation(CREATE_REVIEW);
+  const [publication, setPublication] = useState([]);
+  const [textReview, setTextReview] = useState("");
+  const [reviews, setReviews] = useState([]);
+
+  const addReview = (e, text, idPublication, uId) => {
+    e.preventDefault();
+    if (text) {
+      console.log(text);
+      createReview({
+        variables: {
+          publicationId: idPublication,
+          text: text,
+          userId: uId,
+          date: "2019-01-28T19:32:08.382Z",
+        },
+      });
+    } else {
+      alert("Textové pole neobsahuje žádný text!");
+    }
+  };
 
   useEffect(() => {
     if (data) {
       setPublication(data.publication);
     }
     console.log(data);
-  });
+  }, [data]);
 
+  if (error) return `Error! ${error.message}`;
   if (loading) return "Loading...";
   return (
     <>
@@ -61,16 +82,25 @@ const PublicationDetail = (props) => {
           <Review user="Uživatel" date="Datum" />
           <Review user="Uživatel" date="Datum" />
         </div>
-        <form onSubmit="addReview" id="insertReview">
+        <form onSubmit={addReview} id="insertReview">
           <TextField
+            onChange
             id="outlined-multiline-static"
-            label="Multiline"
+            label="Zadejte zde svoji recenzi"
             multiline
+            value={textReview}
+            onChange={(event) =>
+              setTextReview(event.target.value, textReview, idPublication, 1)
+            }
             rows={4}
-            defaultValue="Zadejte zde Recenzi"
             variant="outlined"
           />
-          <Button on id="buttonInsert" variant="contained" color="primary">
+          <Button
+            type="submit"
+            id="buttonInsert"
+            variant="contained"
+            color="primary"
+          >
             Přidat Recenzi
           </Button>
         </form>
