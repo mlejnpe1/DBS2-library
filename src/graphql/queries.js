@@ -54,6 +54,13 @@ export const LOAD_BOOK = gql`
         id
         name
       }
+      reviews {
+        text
+        user {
+          username
+        }
+        creationDate
+      }
       book {
         quantity
         author {

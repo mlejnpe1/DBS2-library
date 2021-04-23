@@ -17,6 +17,10 @@ export const CREATE_REVIEW = gql`
       }
     ) {
       id
+      user {
+        username
+      }
+      creationDate
     }
   }
 `;

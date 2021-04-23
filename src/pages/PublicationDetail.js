@@ -17,23 +17,28 @@ const PublicationDetail = (props) => {
     variables: { id: idPublication }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query
   });
 
-  const { createReview } = useMutation(CREATE_REVIEW);
+  const [createReview] = useMutation(CREATE_REVIEW);
   const [publication, setPublication] = useState([]);
   const [textReview, setTextReview] = useState("");
   const [reviews, setReviews] = useState([]);
 
-  const addReview = (e, text, idPublication, uId) => {
+  const addReview = async (e, text, idPublication, uId) => {
     e.preventDefault();
     if (text) {
       console.log(text);
-      createReview({
-        variables: {
-          publicationId: idPublication,
-          text: text,
-          userId: uId,
-          date: "2019-01-28T19:32:08.382Z",
-        },
-      });
+      try {
+        /*const res = createReview({
+          variables: {
+            publicationId: idPublication,
+            text: text,
+            userId: uId,
+            date: "2019-01-28T19:32:08.382Z",
+          },
+        });
+        console.log(res);*/
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       alert("Textové pole neobsahuje žádný text!");
     }
@@ -42,6 +47,7 @@ const PublicationDetail = (props) => {
   useEffect(() => {
     if (data) {
       setPublication(data.publication);
+      setReviews(data.publication.reviews);
     }
     console.log(data);
   }, [data]);
@@ -82,16 +88,17 @@ const PublicationDetail = (props) => {
           <Review user="Uživatel" date="Datum" />
           <Review user="Uživatel" date="Datum" />
         </div>
-        <form onSubmit={addReview} id="insertReview">
+        <form
+          onSubmit={(event) => addReview(event, textReview, idPublication, 1)}
+          id="insertReview"
+        >
           <TextField
             onChange
             id="outlined-multiline-static"
             label="Zadejte zde svoji recenzi"
             multiline
             value={textReview}
-            onChange={(event) =>
-              setTextReview(event.target.value, textReview, idPublication, 1)
-            }
+            onChange={(event) => setTextReview(event.target.value)}
             rows={4}
             variant="outlined"
           />

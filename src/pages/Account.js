@@ -47,7 +47,7 @@ const columns = [
 ];
 
 const Account = () => {
-  const { data } = useQuery(LOAD_USER(1));
+  const { data } = useQuery(LOAD_USER(2));
   const [user, setUser] = useState({});
   useEffect(() => {
     if (data) {
