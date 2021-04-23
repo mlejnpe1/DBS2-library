@@ -1,6 +1,53 @@
-#contentDetail {
+#mainContent {
   display: flex;
   flex-direction: column;
+  height: auto;
+  padding: 50px 50px 100px 50px;
+}
+
+#content {
   width: 100%;
-  height: 100%;
+  display: flex;
+  height: auto;
+  flex-direction: row;
+}
+
+#image img {
+  width: 400px;
+  height: auto;
+}
+
+#image {
+  padding: 50px;
+}
+
+#detail {
+  width: 60%;
+  margin: 0px;
+  padding: 30px;
+  border-left-color: rgb(53, 53, 53);
+  border-left-width: 1px;
+  border-left-style: solid;
+}
+
+.texts {
+  padding: 10px;
+}
+
+#reviews {
+  display: flex;
+  flex-direction: column;
+}
+
+#insertReview {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#buttonInsert {
+  width: 200px;
+  align-self: flex-end;
+  margin-top: 10px;
 }

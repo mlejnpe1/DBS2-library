@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const LOAD_BOOKS = gql`
+export const LOAD_PUBLICATIONS = gql`
   query {
     publications {
       name
@@ -38,4 +38,30 @@ export const LOAD_USER = (id) => gql`
         }
         }
     }
+`;
+
+export const LOAD_BOOK = gql`
+  query($id: Int!) {
+    publication(id: $id) {
+      id
+      name
+      yearOfPub
+      description
+      image {
+        img
+      }
+      category {
+        id
+        name
+      }
+      book {
+        quantity
+        author {
+          name
+          secondName
+          lastName
+        }
+      }
+    }
+  }
 `;

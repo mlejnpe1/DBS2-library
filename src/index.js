@@ -15,7 +15,7 @@ import { routes } from "./router/routes";
 
 const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {
-    graphqlErrors.map(({ message, location, path }) => {
+    return graphqlErrors.map(({ message, location, path }) => {
       alert(`GraphQL error ${message}`);
     });
   }
@@ -23,7 +23,7 @@ const errorLink = onError(({ graphqlErrors, networkError }) => {
 
 const link = from([
   errorLink,
-  new HttpLink({ uri: "https://localhost:5001/graphql/" }),
+  new HttpLink({ uri: "http://joseff-001-site1.ctempurl.com/graphql/" }),
 ]);
 
 const client = new ApolloClient({

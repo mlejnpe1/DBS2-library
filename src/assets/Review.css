@@ -1,0 +1,22 @@
+.review {
+  width: 100%;
+  padding: 20px 0px;
+  margin: 20px 0px;
+}
+
+#info {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0px;
+}
+
+#user {
+  display: flex;
+  width: 50%;
+}
+
+#date {
+  display: flex;
+  width: 50%;
+  justify-content: flex-end;
+}

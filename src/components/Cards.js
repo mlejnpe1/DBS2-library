@@ -12,7 +12,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import { useQuery } from "@apollo/client";
-import { LOAD_BOOKS } from "../graphql/queries";
+import { LOAD_PUBLICATIONS } from "../graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +68,7 @@ function a11yProps(index) {
 function Cards() {
   const classes = useStyles();
 
-  const { error, loading, data } = useQuery(LOAD_BOOKS);
+  const { error, loading, data } = useQuery(LOAD_PUBLICATIONS);
   const [publications, setPublications] = useState([]);
 
   const [value, setValue] = useState(0);
@@ -121,7 +121,7 @@ function Cards() {
               {publications.map((tile) => (
                 <GridListTile key={tile.id}>
                   <img src={faker.image.image()} alt={tile.title} />
-                  <Link to="/detail">
+                  <Link to={{ pathname: "/detail", state: { id: tile.id } }}>
                     <GridListTileBar
                       title={tile.name}
                       classes={{
