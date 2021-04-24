@@ -24,3 +24,40 @@ export const CREATE_REVIEW = gql`
     }
   }
 `;
+
+export const CREATE_RESERVATION = gql`
+  mutation(
+    $dateFrom: DateTime!
+    $dateTo: DateTime!
+    $publicationId: Int!
+    $userId: Int!
+  ){
+    createReservation(
+      reservationModel:{
+        dateFrom: $dateFrom
+        dateTo: $dateTo
+        publicationId: $publicationId
+        userId: $userId
+      }
+    ){
+      id
+      dateFrom
+      dateTo
+    }
+  }
+`;
+
+export const DELETE_RESERVATION = gql`
+mutation(
+  $reservationId: Int!
+){
+  deleteReservation(
+    id: $reservationId
+  ){
+    dateTo
+    publication{
+      name
+    }
+  }
+}
+`;

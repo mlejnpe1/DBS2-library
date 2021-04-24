@@ -6,8 +6,9 @@ import Footer from "../components/Footer";
 import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
 import Button from "@material-ui/core/Button";
+import HomeButton from "../components/HomeButton";
 import { LOAD_BOOK } from "../graphql/queries";
-import { CREATE_REVIEW } from "../graphql/mutations";
+import { CREATE_REVIEW, CREATE_RESERVATION } from "../graphql/mutations";
 import { Typography } from "@material-ui/core";
 import Review from "../components/Review";
 
@@ -18,6 +19,7 @@ const PublicationDetail = (props) => {
   });
 
   const [createReview] = useMutation(CREATE_REVIEW);
+  const [createReservation] = useMutation(CREATE_RESERVATION);
   const [publication, setPublication] = useState([]);
   const [textReview, setTextReview] = useState("");
   const [reviews, setReviews] = useState([]);
@@ -40,6 +42,25 @@ const PublicationDetail = (props) => {
           console.log(review.data.createReview);
         });
   };
+
+  const addReservation = (e, idPublication,  uId) =>{
+    e.preventDefault();
+    const res = createReservation({
+      variables: {
+        dateFrom: Date.now(),
+        dateTo: "2019-01-28T19:32:08.382Z",
+        publicationId: idPublication,
+        userID: uId
+      },
+    }).catch((res)=>{
+      const errors = res.graphQLErrors.map((error) => {
+        return error.message;
+    });
+    }).then(reservation =>{
+      console.log(reservation.data.createReservation);
+    }
+    )
+  }
 
   useEffect(() => {
     if (data) {
@@ -75,6 +96,13 @@ const PublicationDetail = (props) => {
             <Typography className="texts" variant="body1">
               {publication.description}
             </Typography>
+            <div className="button">
+              <Button 
+                variant="contained"
+                color="primary"
+                onClick={(event)=> addReservation(event, idPublication, 2)}
+               >Vypůjčit</Button>
+            </div>
           </div>
         </div>
         <Typography variant="h4">Recenze</Typography>
@@ -92,7 +120,7 @@ const PublicationDetail = (props) => {
           <TextField
             onChange
             id="outlined-multiline-static"
-            label="Zadejte zde svoji recenzi"
+            placeholder="Zadejte zde svoji recenzi"
             multiline
             value={textReview}
             onChange={(event) => setTextReview(event.target.value)}
@@ -109,6 +137,7 @@ const PublicationDetail = (props) => {
           </Button>
         </form>
       </div>
+      <HomeButton/>
       <Footer />
     </>
   );

@@ -1,8 +1,4 @@
 .footer-container {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   display: flex;
   z-index: 3;
   flex-direction: row;
