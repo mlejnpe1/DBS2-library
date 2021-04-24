@@ -75,7 +75,7 @@ function CreatePublication() {
                     </Select>
                     </div>
                     <div className="button-wrapper">
-                        <Button onSubmit={} variant="contained" color="primary" className="item">Vytvořit položku</Button>
+                        <Button variant="contained" color="primary" className="item">Vytvořit položku</Button>
                     </div>
                 </form>
             </div>

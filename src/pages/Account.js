@@ -8,6 +8,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
 import { DELETE_RESERVATION } from "../graphql/mutations";
 import { formatDate } from "../services/utils";
+import {Link} from 'react-router-dom';
 
 const DeleteReservation = () => {
   const { reservation } = useMutation(DELETE_RESERVATION(reservationId)); //TODO: reservationId
