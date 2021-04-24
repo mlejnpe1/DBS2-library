@@ -9,6 +9,7 @@ import { Typography, Button, TextField } from "@material-ui/core";
 import faker from "faker";
 import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
+import { formatDate } from "../services/utils";
 
 const PublicationDetail = (props) => {
   const idPublication = parseInt(props.location.state.id); //String with ID has to be parse into Int, otherwise useQuery cannot fetch data and fails
@@ -22,51 +23,57 @@ const PublicationDetail = (props) => {
   const [textReview, setTextReview] = useState("");
   const [reviews, setReviews] = useState([]);
 
-  const addReview = (e, text, idPublication, uId) => {
+  const handleSubmit = (e, text, idPublication, uId) => {
     e.preventDefault();
-      console.log(text);
-        const res = createReview({
-          variables: {
-            publicationId: idPublication,
-            text: text,
-            userId: uId,
-            date: "2019-01-28T19:32:08.382Z",
-          },
-        }).catch((res) => {
-          const errors = res.graphQLErrors.map((error) => {
-              return error.message;
-          });
-        }).then(review => {
-          console.log(review.data.createReview);
+    console.log(text);
+    const res = createReview({
+      variables: {
+        publicationId: idPublication,
+        text: text,
+        userId: uId,
+        date: new Date().toISOString(),
+      },
+    })
+      .catch((res) => {
+        const errors = res.graphQLErrors.map((error) => {
+          return error.message;
         });
+      })
+      .then((review) => {
+        setReviews([...reviews, review.data.createReview]);
+      });
   };
 
-  const addReservation = (e, idPublication,  uId) =>{
+  const addReservation = (e, idPublication, uId) => {
     e.preventDefault();
     const res = createReservation({
       variables: {
         dateFrom: Date.now(),
         dateTo: "2019-01-28T19:32:08.382Z",
         publicationId: idPublication,
-        userID: uId
+        userID: uId,
       },
-    }).catch((res)=>{
-      const errors = res.graphQLErrors.map((error) => {
-        return error.message;
-    });
-    }).then(reservation =>{
-      console.log(reservation.data.createReservation);
-    }
-    )
-  }
+    })
+      .catch((res) => {
+        const errors = res.graphQLErrors.map((error) => {
+          return error.message;
+        });
+      })
+      .then((reservation) => {
+        console.log(reservation.data.createReservation);
+      });
+  };
 
   useEffect(() => {
     if (data) {
       setPublication(data.publication);
+    }
+    if (reviews.length === 0) {
       setReviews(data.publication.reviews);
     }
+    console.log(reviews);
     console.log(data);
-  }, [data]);
+  }, [data, reviews]);
 
   if (error) return `Error! ${error.message}`;
   if (loading) return "Loading...";
@@ -95,24 +102,42 @@ const PublicationDetail = (props) => {
               {publication.description}
             </Typography>
             <div className="button">
-              <Button 
+              <Button
                 variant="contained"
                 color="primary"
-                onClick={(event)=> addReservation(event, idPublication, 2)}
-               >Vypůjčit</Button>
+                onClick={(event) => addReservation(event, idPublication, 2)}
+              >
+                Vypůjčit
+              </Button>
             </div>
           </div>
         </div>
         <Typography variant="h4">Recenze</Typography>
         <div id="reviews">
-          <Review user="Uživatel" date="Datum" />
-          <Review user="Uživatel" date="Datum" />
-          <Review user="Uživatel" date="Datum" />
-          <Review user="Uživatel" date="Datum" />
-          <Review user="Uživatel" date="Datum" />
+          {publication.reviews.length < 0 ? (
+            reviews.map((review) => {
+              return (
+                <Review
+                  key={review.id}
+                  user={review.user.username}
+                  date={formatDate(review.creationDate)}
+                  text={review.text}
+                />
+              );
+            })
+          ) : (
+            <Typography
+              style={{ margin: "20px 0px", color: "grey", textAlign: "center" }}
+              variant="h6"
+            >
+              Žádné recenze
+            </Typography>
+          )}
         </div>
         <form
-          onSubmit={(event) => addReview(event, textReview, idPublication, 2)}
+          onSubmit={(event) =>
+            handleSubmit(event, textReview, idPublication, 2)
+          }
           id="insertReview"
         >
           <TextField
@@ -135,7 +160,7 @@ const PublicationDetail = (props) => {
           </Button>
         </form>
       </div>
-      <HomeButton/>
+      <HomeButton />
       <Footer />
     </>
   );

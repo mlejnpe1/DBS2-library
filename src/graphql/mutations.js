@@ -20,6 +20,7 @@ export const CREATE_REVIEW = gql`
       user {
         username
       }
+      text
       creationDate
     }
   }
@@ -31,15 +32,15 @@ export const CREATE_RESERVATION = gql`
     $dateTo: DateTime!
     $publicationId: Int!
     $userId: Int!
-  ){
+  ) {
     createReservation(
-      reservationModel:{
+      reservationModel: {
         dateFrom: $dateFrom
         dateTo: $dateTo
         publicationId: $publicationId
         userId: $userId
       }
-    ){
+    ) {
       id
       dateFrom
       dateTo
@@ -48,16 +49,12 @@ export const CREATE_RESERVATION = gql`
 `;
 
 export const DELETE_RESERVATION = gql`
-mutation(
-  $reservationId: Int!
-){
-  deleteReservation(
-    id: $reservationId
-  ){
-    dateTo
-    publication{
-      name
+  mutation($reservationId: Int!) {
+    deleteReservation(id: $reservationId) {
+      dateTo
+      publication {
+        name
+      }
     }
   }
-}
 `;
