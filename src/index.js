@@ -12,6 +12,7 @@ import {
 import { history } from "./services/history";
 import { Router } from "react-router";
 import { routes } from "./router/routes";
+import { shouldInclude } from "@apollo/client/utilities";
 
 const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {
@@ -23,12 +24,16 @@ const errorLink = onError(({ graphqlErrors, networkError }) => {
 
 const link = from([
   errorLink,
-  new HttpLink({ uri: "http://joseff-001-site1.ctempurl.com/graphql/" }),
+  new HttpLink({
+    uri: "http://joseff-001-site1.ctempurl.com/graphql/",
+    credentials: "onclude",
+  }),
 ]);
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: link,
+  credentials: shouldInclude,
 });
 
 ReactDOM.render(

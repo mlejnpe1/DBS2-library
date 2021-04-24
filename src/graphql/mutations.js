@@ -58,3 +58,11 @@ export const DELETE_RESERVATION = gql`
     }
   }
 `;
+
+export const LOGIN = gql`
+  mutation($name: String, $password: String) {
+    login(userName: $name, password: $password) {
+      id
+    }
+  }
+`;

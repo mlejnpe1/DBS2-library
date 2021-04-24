@@ -69,16 +69,12 @@ const PublicationDetail = (props) => {
   useEffect(() => {
     if (data) {
       setPublication(data.publication);
+      if (reviews.length === 0) setReviews(data.publication.reviews);
     }
-    if (reviews.length === 0) {
-      setReviews(data.publication.reviews);
-    }
-    console.log(reviews);
-    console.log(data);
   }, [data, reviews]);
 
-  if (error) return `Error! ${error.message}`;
   if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
   return (
     <>
       <Navbar />
@@ -116,7 +112,7 @@ const PublicationDetail = (props) => {
         </div>
         <Typography variant="h4">Recenze</Typography>
         <div id="reviews">
-          {publication.reviews.length < 0 ? (
+          {reviews.length > 0 ? (
             reviews.map((review) => {
               return (
                 <Review
