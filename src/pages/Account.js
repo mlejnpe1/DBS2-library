@@ -4,31 +4,21 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { Typography, Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import "../assets/Account.css";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
 import { DELETE_RESERVATION } from "../graphql/mutations";
-
-const formatDate = (d) => {
-  const date = new Date(d);
-  const day = date.getDate();
-  const year = date.getFullYear();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const month = date.getMonth();
-  const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}`;
-  return formattedDate.toString();
-};
+import { formatDate } from "../services/utils";
 
 const DeleteReservation = () => {
-  const { reservation } = useQuery(DELETE_RESERVATION(reservationId)) //TODO: reservationId
+  const { reservation } = useMutation(DELETE_RESERVATION(reservationId)); //TODO: reservationId
   const [reservationId, setReservationId] = useState({});
-  useEffect(()=> {
-    if (reservation){
+  useEffect(() => {
+    if (reservation) {
       setReservationId(reservation.id);
     }
-    console.log(reservation)
+    console.log(reservation);
   }, [reservation]);
-}
+};
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -57,18 +47,22 @@ const columns = [
     },
   },
   {
-    field: "returnButton",
+    field: "id",
     headerName: "Vrátit",
     width: 150,
-    valueGetter: () => {
-      return <Button 
-      variant="contained"
-      color="primary"
-      onClick={DeleteReservation()}
-      >Vrátit položku
-      </Button>;
+    valueGetter: (params) => {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          value={params.row.id}
+          onClick={DeleteReservation()}
+        >
+          Vrátit položku
+        </Button>
+      );
     },
-  }
+  },
 ];
 
 const Account = () => {

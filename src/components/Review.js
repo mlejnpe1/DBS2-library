@@ -5,24 +5,20 @@ import Container from "@material-ui/core/Container";
 import "../assets/Review.css";
 import { StylesProvider, Typography } from "@material-ui/core";
 
-const Review = (props) => {
+const Review = ({ user, date, text, id }) => {
   return (
     <StylesProvider injectFirst>
-      <div className="review">
+      <div key={id} className="review">
         <div id="info">
           <Typography id="user" variant="subtitle2">
-            {props.user}
+            {user}
           </Typography>
           <Typography id="date" variant="subtitle2">
-            {props.date}
+            {date}
           </Typography>
         </div>
         <div>
-          <Typography>
-            Kniha mě velmi vtáhla do svýho příběhu. Velmi podrobně a zajimavě
-            jsou rozebrány události za napoleonských válek. Kniha se mi líbila,
-            ale komu ne. Je to stará dobra klasika.
-          </Typography>
+          <Typography>{text}</Typography>
         </div>
       </div>
     </StylesProvider>
