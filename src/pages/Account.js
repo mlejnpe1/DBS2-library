@@ -6,7 +6,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import "../assets/Account.css";
 import { useQuery } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
-import { DELETE_RESERVATION } from "../graphql/mutations";
+import { Link } from "react-router-dom";
 
 const formatDate = (d) => {
   const date = new Date(d);
@@ -18,17 +18,6 @@ const formatDate = (d) => {
   const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}`;
   return formattedDate.toString();
 };
-
-const DeleteReservation = () => {
-  const { reservation } = useQuery(DELETE_RESERVATION(reservationId)) //TODO: reservationId
-  const [reservationId, setReservationId] = useState({});
-  useEffect(()=> {
-    if (reservation){
-      setReservationId(reservation.id);
-    }
-    console.log(reservation)
-  }, [reservation]);
-}
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -61,18 +50,21 @@ const columns = [
     headerName: "Vrátit",
     width: 150,
     valueGetter: () => {
-      return <Button 
-      variant="contained"
-      color="primary"
-      onClick={DeleteReservation()}
-      >Vrátit položku
-      </Button>;
+      return(
+        <>
+        <Button 
+          variant="contained"
+          color="primary"
+          >Vrátit položku
+        </Button>
+        </>
+      );
     },
   }
 ];
 
 const Account = () => {
-  const { data } = useQuery(LOAD_USER(2));
+  const {  error, loading, data} = useQuery(LOAD_USER(2));
   const [user, setUser] = useState({});
   useEffect(() => {
     if (data) {
@@ -81,6 +73,9 @@ const Account = () => {
     console.log(data);
   }, [data]);
 
+  
+  if (error) return `Error! ${error.message}`;
+  if (loading) return "Loading...";
   return (
     <>
       <Navbar />
@@ -101,10 +96,11 @@ const Account = () => {
                 Tel. číslo: <br />
                 {user.telNumber ? user.telNumber : "Není uvedeno"}
               </Typography>
+              <Link to="/create"><Button variant="contained" color="primary">Přidat položku</Button></Link>
             </div>
             <div id="reservations">
               {user.reservations && (
-                <DataGrid rows={user.reservations} columns={columns} />
+                <DataGrid className="grid-height" rows={user.reservations} columns={columns} />
               )}
             </div>
           </div>

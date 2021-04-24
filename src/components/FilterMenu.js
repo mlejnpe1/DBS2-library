@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   TextField,
@@ -10,6 +10,8 @@ import {
   Button,
 } from "@material-ui/core";
 import "../assets/FilterMenu.css";
+import {LOAD_CATEGORIES} from '../graphql/queries';
+import {useQuery } from "@apollo/client";
 
 function FillterMenu() {
   const [age, setAge] = React.useState("");
@@ -19,6 +21,8 @@ function FillterMenu() {
     checkedF: true,
     checkedG: true,
   });
+  const { error, loading, data } = useQuery(LOAD_CATEGORIES);
+  const [categories, setCategories] = useState([]);
 
   const handleSelectChange = (event) => {
     setAge(event.target.value);
@@ -28,6 +32,15 @@ function FillterMenu() {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  useEffect(() => {
+    if (data) {
+        setCategories(data.categories);
+    }
+      console.log(data);
+    }, [data]);
+  
+  if (error) return `Error! ${error.message}`;
+  if (loading) return "Loading...";
   return (
     <div className="fillter-container">
       <div className="fillter-wrapper">
@@ -63,15 +76,10 @@ function FillterMenu() {
           value={age}
           onChange={handleSelectChange}
         >
-          <MenuItem value={0}>Action/Adventure</MenuItem>
-          <MenuItem value={1}>Classic</MenuItem>
-          <MenuItem value={2}>Comic Book/Graphical Novel</MenuItem>
-          <MenuItem value={3}>Fantasy</MenuItem>
-          <MenuItem value={4}>Historical Fiction</MenuItem>
-          <MenuItem value={5}>Horror</MenuItem>
-          <MenuItem value={6}>Literary Fiction</MenuItem>
-          <MenuItem value={7}>Science Fiction</MenuItem>
-          <MenuItem value={8}>Detective/Mystery</MenuItem>
+          {categories.map((category)=>{
+              return <MenuItem className="" value={category.id}>{category.name}</MenuItem>
+            })
+          }
         </Select>
         <FormControlLabel
           id="checkbox"

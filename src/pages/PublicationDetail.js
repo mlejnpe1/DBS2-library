@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import TextField from "@material-ui/core/TextField";
-import faker from "faker";
 import Footer from "../components/Footer";
-import { useMutation, useQuery } from "@apollo/client";
-import "../assets/PublicationDetail.css";
-import Button from "@material-ui/core/Button";
 import HomeButton from "../components/HomeButton";
+import Review from "../components/Review";
 import { LOAD_BOOK } from "../graphql/queries";
 import { CREATE_REVIEW, CREATE_RESERVATION } from "../graphql/mutations";
-import { Typography } from "@material-ui/core";
-import Review from "../components/Review";
+import { Typography, Button, TextField } from "@material-ui/core";
+import faker from "faker";
+import { useMutation, useQuery } from "@apollo/client";
+import "../assets/PublicationDetail.css";
 
 const PublicationDetail = (props) => {
   const idPublication = parseInt(props.location.state.id); //String with ID has to be parse into Int, otherwise useQuery cannot fetch data and fails

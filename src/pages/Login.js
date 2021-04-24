@@ -4,6 +4,8 @@ import {Visibility, VisibilityOff} from '@material-ui/icons';
 import HomeButton from '../components/HomeButton';
 import '../assets/Form.css';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Login = () => {
 
@@ -26,7 +28,9 @@ const Login = () => {
     
 
     return (
-        <div className="container-wrapper">
+        <>
+        <Navbar/>
+        <div className="height container-wrapper">
             <div className="container">
                 <Typography className="h2" variant="h2">Login to your Account</Typography>
                 <div className="item">
@@ -65,8 +69,9 @@ const Login = () => {
             <div className="link-wrapper">
                 <Link to="/register"><InputLabel class="link" htmlFor="standard-adornment-password"><Typography>Dont have account yet?</Typography></InputLabel></Link>
             </div>
-            <HomeButton/>
         </div>
+        <Footer/>
+        </>
     )
 }
 
