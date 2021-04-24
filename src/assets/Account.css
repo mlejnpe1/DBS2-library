@@ -17,16 +17,21 @@ h3 {
 
 #credentials {
   padding: 20px;
-  background-color: rgba(1, 162, 255, 0.2);
+  background-color: rgba(236, 238, 248, 0.7);
+  height: 80vh;
 }
 
 #reservations {
   width: 70%;
+  height: 80vh;
 }
 
 .MuiDataGrid-root {
   height: 400px;
   margin: auto;
+}
+.grid-height{
+  height: 100%;
 }
 
 @media screen and (max-width: 1024px) {

@@ -72,3 +72,11 @@ export const LOAD_BOOK = gql`
     }
   }
 `;
+export const LOAD_CATEGORIES = gql`
+query{
+  categories{
+    id
+    name
+  }
+}
+`;

@@ -8,6 +8,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
 import { DELETE_RESERVATION } from "../graphql/mutations";
 import { formatDate } from "../services/utils";
+import {Link} from 'react-router-dom';
 
 const DeleteReservation = () => {
   const { reservation } = useMutation(DELETE_RESERVATION(reservationId)); //TODO: reservationId
@@ -66,7 +67,7 @@ const columns = [
 ];
 
 const Account = () => {
-  const { data } = useQuery(LOAD_USER(2));
+  const {  error, loading, data} = useQuery(LOAD_USER(2));
   const [user, setUser] = useState({});
   useEffect(() => {
     if (data) {
@@ -75,6 +76,9 @@ const Account = () => {
     console.log(data);
   }, [data]);
 
+  
+  if (error) return `Error! ${error.message}`;
+  if (loading) return "Loading...";
   return (
     <>
       <Navbar />
@@ -95,10 +99,11 @@ const Account = () => {
                 Tel. číslo: <br />
                 {user.telNumber ? user.telNumber : "Není uvedeno"}
               </Typography>
+              <Link to="/create"><Button variant="contained" color="primary">Přidat položku</Button></Link>
             </div>
             <div id="reservations">
               {user.reservations && (
-                <DataGrid rows={user.reservations} columns={columns} />
+                <DataGrid className="grid-height" rows={user.reservations} columns={columns} />
               )}
             </div>
           </div>
