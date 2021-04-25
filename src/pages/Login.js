@@ -119,13 +119,13 @@ const Login = () => {
             </Button>
           </div>
         </form>
-      </div>
       <div className="link-wrapper">
         <Link to="/register">
           <InputLabel class="link" htmlFor="standard-adornment-password">
             <Typography>Ještě nemáš účet?</Typography>
           </InputLabel>
         </Link>
+      </div>
       </div>
       <Footer />
     </>

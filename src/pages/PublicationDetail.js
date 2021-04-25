@@ -45,14 +45,21 @@ const PublicationDetail = (props) => {
       });
   };
 
-  const addReservation = (e, idPublication, uId) => {
+  const handleMonth = () =>{
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 31);
+    return currentDate.toISOString();
+  }
+
+  const addReservation = (e) => {
     e.preventDefault();
     const res = createReservation({
       variables: {
-        dateFrom: Date.now(),
-        dateTo: "2019-01-28T19:32:08.382Z",
+        dateFrom: new Date().toISOString(),
+        dateTo: handleMonth(),
         publicationId: idPublication,
-        userID: uId,
+        userId: 6,
+        returned: false,
       },
     })
       .catch((res) => {
@@ -61,7 +68,7 @@ const PublicationDetail = (props) => {
         });
       })
       .then((reservation) => {
-        console.log(reservation.data.createReservation);
+        console.log(reservation);
       });
   };
 
@@ -103,7 +110,7 @@ const PublicationDetail = (props) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={(event) => addReservation(event, idPublication, 2)}
+                onClick={(event) => addReservation(event)}
               >
                 Vypůjčit
               </Button>

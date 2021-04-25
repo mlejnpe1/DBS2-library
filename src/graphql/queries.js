@@ -31,6 +31,7 @@ export const LOAD_USER = gql`
       email
       telNumber
       username
+
       reservations {
         id
         publicationId
@@ -40,6 +41,8 @@ export const LOAD_USER = gql`
         }
         dateFrom
         dateTo
+        debt
+        userId
       }
     }
   }

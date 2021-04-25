@@ -1,5 +1,6 @@
 export const formatDate = (d) => {
   const date = new Date(d);
+  date.setUTCHours(2);
   const day = date.getDate();
   const year = date.getFullYear();
   const hours = date.getHours();
