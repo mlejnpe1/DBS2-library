@@ -12,9 +12,9 @@ function Footer() {
                 <Typography>You can support us below</Typography>
                 <div className="footer-divider"></div>
                 <div className="footer-icons">
-                    <a href="#"><CreditCard /></a>
-                    <a href="#"><Facebook /></a>
-                    <a href="#"><PhotoCamera /></a>
+                    <CreditCard />
+                    <Facebook />
+                    <PhotoCamera />
                 </div>
             </div>
         </div>

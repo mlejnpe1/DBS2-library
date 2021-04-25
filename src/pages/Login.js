@@ -64,11 +64,10 @@ const Login = () => {
     <>
     <Navbar/>
       <div className="form-height container-wrapper">
-      <div className="container">
-        <Typography className="h2" variant="h2">
-          Login to your Account
-        </Typography>
-        <form onSubmit={(event) => handleSubmit(event)}>
+        <form className="container" onSubmit={(event) => handleSubmit(event)}>
+          <Typography className="h2" variant="h2">
+            Login to your Account
+          </Typography>
           <div className="item">
             <InputLabel htmlFor="standard-adornment-password">
               User name
@@ -116,7 +115,6 @@ const Login = () => {
             </Button>
           </div>
         </form>
-      </div>
       <div className="link-wrapper">
         <Link to="/register">
           <InputLabel class="link" htmlFor="standard-adornment-password">

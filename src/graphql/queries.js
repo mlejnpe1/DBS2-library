@@ -72,6 +72,7 @@ export const LOAD_BOOK = gql`
     }
   }
 `;
+
 export const LOAD_CATEGORIES = gql`
   query {
     categories {
@@ -79,4 +80,13 @@ export const LOAD_CATEGORIES = gql`
       name
     }
   }
+`;
+
+export const LOAD_PUBLISHERS = gql`
+query{
+  publishers{
+    id
+    name
+  }
+}
 `;

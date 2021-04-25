@@ -21,7 +21,7 @@
   background-color: rgba(236, 238, 248, 0.7);
 }
 .item {
-  margin: 2.5% 0px 5% 0px !important;
+  margin: 1.5% 0px 5% 0px !important;
   width: 60%;
 }
 .width {
@@ -47,7 +47,11 @@
 .button {
   display: flex;
   justify-content: center;
-  margin: 2.5% auto 5% auto !important;
+  margin: 2.5% auto 2.5% auto !important;
+  width: auto;
+}
+.h2{
+  margin-bottom: 10% !important;
 }
 @media only screen and (max-width: 1024px) {
   .container {
