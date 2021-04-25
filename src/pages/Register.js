@@ -64,84 +64,65 @@ const Register = () => {
     <>
       <Navbar />
       <div className="form-height container-wrapper">
-        <div className="container">
+        <form className="container" onSubmit={(event) => handleSubmit(event)}>
           <Typography className="h2" variant="h2">
-            Create new Account
+            Vytvořite si účet
           </Typography>
-          <form onSubmit={(event) => handleSubmit(event)}>
-            <div className="item">
-              <InputLabel htmlFor="standard-adornment-password">
-                User name
-              </InputLabel>
-              <TextField
-                required
-                className="item width"
-                id="standart-basic"
-                placeholder="Required*"
-              ></TextField>
-            </div>
-            <div className="item">
-              <InputLabel htmlFor="standard-adornment-password">
-                Mail address
-              </InputLabel>
-              <TextField
-                required
-                className="item width"
-                id="standart-basic"
-                placeholder="Required*"
-              ></TextField>
-            </div>
-            <div className="item">
-              <InputLabel htmlFor="standard-adornment-password">
-                Mail address
-              </InputLabel>
-              <TextField
-                className="item width"
-                id="standart-basic"
-                placeholder="Optional*"
-              ></TextField>
-            </div>
-            <div className="item">
-              <InputLabel htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
-              <Input
-                required
-                className="width"
-                id="standard-adornment-password"
-                placeholder="Required*"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </div>
-            <div className="button">
-              <Button
-                type="submit"
-                className="button"
-                variant="contained"
-                color="primary"
-              >
-                Register
-              </Button>
-            </div>
-          </form>
-        </div>
+          <div className="item">
+            <InputLabel htmlFor="standard-adornment-password">
+              Uživatelské jméno
+            </InputLabel>
+            <TextField
+              required
+              className="item width"
+              id="standart-basic"
+              placeholder="Požadováno*"
+            ></TextField>
+          </div>
+          <div className="item">
+            <InputLabel htmlFor="standard-adornment-password">
+              E-mailové adresa
+            </InputLabel>
+            <TextField
+              required
+              className="item width"
+              id="standart-basic"
+              placeholder="Požadováno*"
+            ></TextField>
+          </div>
+          <div className="item">
+            <InputLabel htmlFor="standard-adornment-password">Heslo</InputLabel>
+            <Input
+              required
+              className="width"
+              id="standard-adornment-password"
+              placeholder="Požadováno*"
+              type={values.showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={handleChange("password")}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </div>
+          <div className="button">
+            <Button variant="contained" color="primary">
+              Registrovat
+            </Button>
+          </div>
+        </form>
         <div className="link-wrapper">
           <Link to="/login">
             <InputLabel class="link" htmlFor="standard-adornment-password">
-              <Typography>Already registered ?</Typography>
+              <Typography>Jste již registrován?</Typography>
             </InputLabel>
           </Link>
         </div>

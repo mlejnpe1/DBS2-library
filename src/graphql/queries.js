@@ -7,6 +7,11 @@ export const LOAD_PUBLICATIONS = gql`
       id
       yearOfPub
       bookId
+      quantity
+      magazineId
+      magazine {
+        issue
+      }
       category {
         id
         name
@@ -83,10 +88,21 @@ export const LOAD_CATEGORIES = gql`
 `;
 
 export const LOAD_PUBLISHERS = gql`
-query{
-  publishers{
-    id
-    name
+  query {
+    publishers {
+      id
+      name
+    }
   }
-}
+`;
+
+export const LOAD_AUTHORS = gql`
+  query {
+    authors {
+      id
+      name
+      secondName
+      lastName
+    }
+  }
 `;

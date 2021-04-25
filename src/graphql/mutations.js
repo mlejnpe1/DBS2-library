@@ -86,3 +86,24 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const CREATE_AUTHOR = gql`
+mutation(
+  $name: String!
+  $secondName: String!
+  $lastName: String!
+){
+  createAuthor(
+    authorModel:{
+      name: $name
+      secondName: $secondName
+      lastName: $lastName
+    }
+  ){
+    id
+    name
+    secondName
+    lastName
+  }
+}
+`;

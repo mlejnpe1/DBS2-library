@@ -71,28 +71,26 @@ const Login = () => {
       <div className="form-height container-wrapper">
         <form className="container" onSubmit={(event) => handleSubmit(event)}>
           <Typography className="h2" variant="h2">
-            Login to your Account
+            Přihlašte se na svůj účet
           </Typography>
           <div className="item">
             <InputLabel htmlFor="standard-adornment-password">
-              User name
+              Uživatelské jméno
             </InputLabel>
             <TextField
               required
               className="item width"
               id="standart-basic"
-              placeholder="Required*"
+              placeholder="Požadováno*"
             ></TextField>
           </div>
           <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">
-              Password
-            </InputLabel>
+            <InputLabel htmlFor="standard-adornment-password">Heslo</InputLabel>
             <Input
               required
               className="width"
               id="standard-adornment-password"
-              placeholder="Required*"
+              placeholder="Požadováno*"
               type={values.showPassword ? "text" : "password"}
               value={values.password}
               onChange={handleChange("password")}
@@ -116,17 +114,17 @@ const Login = () => {
               variant="contained"
               color="primary"
             >
-              Login
+              Přihlásit se
             </Button>
           </div>
         </form>
-        <div className="link-wrapper">
-          <Link to="/register">
-            <InputLabel class="link" htmlFor="standard-adornment-password">
-              <Typography>Dont have account yet?</Typography>
-            </InputLabel>
-          </Link>
-        </div>
+      </div>
+      <div className="link-wrapper">
+        <Link to="/register">
+          <InputLabel class="link" htmlFor="standard-adornment-password">
+            <Typography>Ještě nemáš účet?</Typography>
+          </InputLabel>
+        </Link>
       </div>
       <Footer />
     </>

@@ -137,7 +137,6 @@ const PublicationDetail = (props) => {
           id="insertReview"
         >
           <TextField
-            onChange
             id="outlined-multiline-static"
             placeholder="Zadejte zde svoji recenzi"
             multiline

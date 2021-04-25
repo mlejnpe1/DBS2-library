@@ -7,9 +7,9 @@ function Footer() {
 
     return (
         <div className="footer-container">
-            <Typography>Thanks for your visitation, see you soon !</Typography>
+            <Typography>Děkujeme za vaší návštěvu, brzy se vraťte!</Typography>
             <div className="footer-icon-strip">
-                <Typography>You can support us below</Typography>
+                <Typography>Můžete nás podpořit níže</Typography>
                 <div className="footer-divider"></div>
                 <div className="footer-icons">
                     <CreditCard />
