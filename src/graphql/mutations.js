@@ -234,3 +234,14 @@ export const CREATE_PUBLISHER = gql`
     }
   }
 `;
+
+export const DELETE_RESERVATION = gql`
+  mutation($reservationId: Int!) {
+    deleteReservation(id: $reservationId) {
+      dateTo
+      publication {
+        name
+      }
+    }
+  }
+`;
