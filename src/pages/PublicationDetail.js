@@ -39,6 +39,7 @@ const PublicationDetail = (props) => {
         });
       })
       .then((review) => {
+        console.log(review);
         setReviews([...reviews, review.data.createReview]);
       });
   };
