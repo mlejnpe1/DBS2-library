@@ -45,10 +45,6 @@ const Register = () => {
                         <TextField required className="item width" id="standart-basic" placeholder="Required*"></TextField>
                     </div>
                     <div className="item">
-                        <InputLabel htmlFor="standard-adornment-password">Mail address</InputLabel>
-                        <TextField className="item width" id="standart-basic" placeholder="Optional*"></TextField>
-                    </div>
-                    <div className="item">
                         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                         <Input
                             required

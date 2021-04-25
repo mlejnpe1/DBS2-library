@@ -103,13 +103,13 @@ export default function Navbar(props) {
       onClose={handleMenuClose}
     >
       <Link to="/login">
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Přihlášení</MenuItem>
       </Link>
       <Link to="/register">
-        <MenuItem onClick={handleMenuClose}>Register</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Registrace</MenuItem>
       </Link>
       <Link to="/account">
-        <MenuItem onClick={handleMenuClose}>Account</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Účet</MenuItem>
       </Link>
     </Menu>
   );
@@ -120,7 +120,7 @@ export default function Navbar(props) {
         <Toolbar>
           <Link to="/">
             <Typography className={classes.title} variant="h6" noWrap>
-              Library
+              Knihovna
             </Typography>
           </Link>
           <div className={classes.grow} />

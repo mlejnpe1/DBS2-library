@@ -77,7 +77,7 @@ function FillterMenu() {
           onChange={handleSelectChange}
         >
           {categories.map((category)=>{
-              return <MenuItem className="" value={category.id}>{category.name}</MenuItem>
+              return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
             })
           }
         </Select>

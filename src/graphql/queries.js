@@ -90,3 +90,14 @@ query{
   }
 }
 `;
+
+export const LOAD_AUTHORS = gql`
+query{
+  authors{
+    id
+    name
+    secondName
+    lastName
+  }
+}
+`;

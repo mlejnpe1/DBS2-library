@@ -7,6 +7,7 @@ import Account from "../pages/Account";
 import CreatePublication from "../pages/CreatePublication";
 import NotFound from "../pages/NotFound";
 import PublicationDetail from "../pages/PublicationDetail";
+import CreateAuthor from "../pages/CreateAuthor";
 
 export const routes = (
   <BrowserRouter>
@@ -16,7 +17,8 @@ export const routes = (
       <Route exact path="/register" component={Register} />
       <Route exact path="/account" component={Account} />
       <Route exact path="/detail" component={PublicationDetail} />
-      <Route exact path="/create" component={CreatePublication} />
+      <Route exact path="/createPub" component={CreatePublication} />
+      <Route exact path="/createAthr" component={CreateAuthor} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

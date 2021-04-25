@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { StylesProvider } from "@material-ui/core/styles";
 import { Typography, Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import "../assets/Account.css";
+import "../assets/Form.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
 import { DELETE_RESERVATION } from "../graphql/mutations";
@@ -61,7 +61,7 @@ const Account = () => {
   const [createReservation] = useMutation(DELETE_RESERVATION);
   const { error, loading, data } = useQuery(LOAD_USER, {
     variables: {
-      id: 2,
+      id: 7,
     },
   });
   const [user, setUser] = useState({});
@@ -93,8 +93,15 @@ const Account = () => {
                 Tel. číslo: <br />
                 {user.telNumber ? user.telNumber : "Není uvedeno"}
               </Typography>
+              <div className="button">
+                  <Link to="/createAthr">
+                    <Button variant="contained" color="primary">
+                      Přidat Autora
+                    </Button>
+                  </Link>
+                </div>
                 <div className="button">
-                  <Link to="/create">
+                  <Link to="/createPub">
                     <Button variant="contained" color="primary">
                       Vytvořit položku
                     </Button>
