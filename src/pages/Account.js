@@ -6,13 +6,12 @@ import "../assets/Account.css";
 import "../assets/Form.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
-import { UPDATE_RESERVATION } from "../graphql/mutations";
+import { UPDATE_RESERVATION, DELETE_RESERVATION } from "../graphql/mutations";
 import { formatDate } from "../services/utils";
 import { Link } from "react-router-dom";
 
-
 const Account = () => {
-  const  [updateReservation] = useMutation(UPDATE_RESERVATION);
+  const [updateReservation] = useMutation(UPDATE_RESERVATION);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -55,81 +54,83 @@ const Account = () => {
           console.log(params);
           const res = updateReservation({
             variables: {
-                id: parseInt(params.row.id),
-                dateFrom: params.row.dateFrom,
-                dateTo: params.row.dateTo,
-                publicationId: params.row.publicationId,
-                userId: params.row.userId,
-                returned: true
-            }
-            })
+              id: parseInt(params.row.id),
+              dateFrom: params.row.dateFrom,
+              dateTo: params.row.dateTo,
+              publicationId: params.row.publicationId,
+              userId: params.row.userId,
+              returned: true,
+            },
+          })
             .catch((res) => {
-                const errors = res.graphQLErrors.map((error) => {
+              const errors = res.graphQLErrors.map((error) => {
                 return error.message;
-                });
+              });
             })
             .then((bookReturnData) => {
-                console.log(bookReturnData);
+              console.log(bookReturnData);
             });
         };
-        return <Button variant="contained" color="primary" onClick={onClick}>Vrátit</Button>;
-      }
+        return (
+          <Button variant="contained" color="primary" onClick={onClick}>
+            Vrátit
+          </Button>
+        );
+      },
     },
   ];
 
-const Account = () => {
-  const [createReservation] = useMutation(DELETE_RESERVATION);
-  console.log(sessionStorage.getItem("id"));
-  const { error, loading, data } = useQuery(LOAD_USER, {
-    variables: {
-      id: parseInt(sessionStorage.getItem("id")),
-    },
-  });
+  const Account = () => {
+    const [createReservation] = useMutation(DELETE_RESERVATION);
+    console.log(sessionStorage.getItem("id"));
+    const { error, loading, data } = useQuery(LOAD_USER, {
+      variables: {
+        id: parseInt(sessionStorage.getItem("id")),
+      },
+    });
 
-  const isAdmin = () => {
-    if (sessionStorage.getItem("role") === "admin") {
-      return (
-        <>
-          <div className="button">
-            <Link to="/createAthr">
-              <Button variant="contained" color="primary">
-                Přidat Autora
-              </Button>
-            </Link>
-          </div>
-          <div className="button">
-            <Link to="/createPub">
-              <Button variant="contained" color="primary">
-                Vytvořit položku
-              </Button>
-            </Link>
-          </div>
-        </>
-      );
-    }
-  };
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    if (data) {
-      setUser(data.user);
-      console.log(data);
-    }
-  }, [data]);
+    const isAdmin = () => {
+      if (sessionStorage.getItem("role") === "admin") {
+        return (
+          <>
+            <div className="button">
+              <Link to="/createAthr">
+                <Button variant="contained" color="primary">
+                  Přidat Autora
+                </Button>
+              </Link>
+            </div>
+            <div className="button">
+              <Link to="/createPub">
+                <Button variant="contained" color="primary">
+                  Vytvořit položku
+                </Button>
+              </Link>
+            </div>
+          </>
+        );
+      }
+    };
+    const [user, setUser] = useState({});
+    useEffect(() => {
+      if (data) {
+        setUser(data.user);
+        console.log(data);
+      }
+    }, [data]);
 
-  const countDebt = () => {
-    var total = 0;
+    const countDebt = () => {
+      var total = 0;
 
-    data.user.reservations.map((reservation)=>
-      total += reservation.debt
-    )
-    return total
-  }
+      data.user.reservations.map((reservation) => (total += reservation.debt));
+      return total;
+    };
 
-  if (error) return `Error! ${error.message}`;
-  if (loading) return "Loading...";
-  return (
-    <>
-      <Navbar />
+    if (error) return `Error! ${error.message}`;
+    if (loading) return "Loading...";
+    return (
+      <>
+        <Navbar />
         {user && (
           <div id="account">
             <div id="credentials">
@@ -151,26 +152,26 @@ const Account = () => {
                 {countDebt()}
               </Typography>
               <div className="button">
-                  <Link to="/createAthr">
-                    <Button variant="contained" color="primary">
-                      Přidat Autora
-                    </Button>
-                  </Link>
-                </div>
-                <div className="button">
-                  <Link to="/createPublisher">
-                    <Button variant="contained" color="primary">
-                      Přidat vydavatelství
-                    </Button>
-                  </Link>
-                </div>
-                <div className="button">
-                  <Link to="/createPub">
-                    <Button variant="contained" color="primary">
-                      Vytvořit položku
-                    </Button>
-                  </Link>
-                </div>
+                <Link to="/createAthr">
+                  <Button variant="contained" color="primary">
+                    Přidat Autora
+                  </Button>
+                </Link>
+              </div>
+              <div className="button">
+                <Link to="/createPublisher">
+                  <Button variant="contained" color="primary">
+                    Přidat vydavatelství
+                  </Button>
+                </Link>
+              </div>
+              <div className="button">
+                <Link to="/createPub">
+                  <Button variant="contained" color="primary">
+                    Vytvořit položku
+                  </Button>
+                </Link>
+              </div>
             </div>
             <div id="reservations">
               {user.reservations && (
@@ -182,9 +183,10 @@ const Account = () => {
               )}
             </div>
           </div>
-      )}
-    </>
-  );
+        )}
+      </>
+    );
+  };
 };
 
 export default Account;

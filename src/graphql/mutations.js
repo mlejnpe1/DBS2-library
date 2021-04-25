@@ -227,16 +227,10 @@ export const CREATE_MAGAZINE = gql`
 `;
 
 export const CREATE_PUBLISHER = gql`
-mutation(
-  $name: String!
-){
-  createPublisher(
-    publisherModel:{
-      name: $name
+  mutation($name: String!) {
+    createPublisher(publisherModel: { name: $name }) {
+      id
+      name
     }
-  ){
-    id
-    name
   }
-}
 `;
