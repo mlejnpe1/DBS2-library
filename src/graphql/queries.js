@@ -67,7 +67,6 @@ export const LOAD_BOOK = gql`
         creationDate
       }
       book {
-        quantity
         author {
           name
           secondName

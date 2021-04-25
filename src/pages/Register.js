@@ -114,7 +114,7 @@ const Register = () => {
             />
           </div>
           <div className="button">
-            <Button variant="contained" color="primary">
+            <Button type="submit" variant="contained" color="primary">
               Registrovat
             </Button>
           </div>
