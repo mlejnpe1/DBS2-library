@@ -12,6 +12,7 @@ import { formatDate } from "../services/utils";
 
 const PublicationDetail = (props) => {
   const idPublication = parseInt(props.location.state.id); //String with ID has to be parse into Int, otherwise useQuery cannot fetch data and fails
+  console.log(idPublication);
   const { error, loading, data } = useQuery(LOAD_BOOK, {
     variables: { id: idPublication }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query
   });
@@ -67,6 +68,7 @@ const PublicationDetail = (props) => {
   useEffect(() => {
     if (data) {
       setPublication(data.publication);
+      console.log(data);
       if (reviews.length === 0) setReviews(data.publication.reviews);
     }
   }, [data, reviews]);
@@ -79,7 +81,7 @@ const PublicationDetail = (props) => {
       <div id="mainContent">
         <div id="content">
           <div id="image">
-            <img src={faker.image.image()} alt="Publication Detail"></img>
+            <img src={publication?.image.img} alt="Publication Detail"></img>
           </div>
           <div id="detail">
             <Typography className="texts" variant="h4">

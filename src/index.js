@@ -18,7 +18,7 @@ import { setContext } from "@apollo/client/link/context";
 const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {
     return graphqlErrors.map(({ message, location, path }) => {
-      alert(`GraphQL error ${message}`);
+      return `GraphQL error ${message}`;
     });
   }
 });

@@ -59,11 +59,35 @@ const columns = [
 
 const Account = () => {
   const [createReservation] = useMutation(DELETE_RESERVATION);
+  console.log(sessionStorage.getItem("id"));
   const { error, loading, data } = useQuery(LOAD_USER, {
     variables: {
-      id: 7,
+      id: parseInt(sessionStorage.getItem("id")),
     },
   });
+
+  const isAdmin = () => {
+    if (sessionStorage.getItem("role") === "admin") {
+      return (
+        <>
+          <div className="button">
+            <Link to="/createAthr">
+              <Button variant="contained" color="primary">
+                Přidat Autora
+              </Button>
+            </Link>
+          </div>
+          <div className="button">
+            <Link to="/createPub">
+              <Button variant="contained" color="primary">
+                Vytvořit položku
+              </Button>
+            </Link>
+          </div>
+        </>
+      );
+    }
+  };
   const [user, setUser] = useState({});
   useEffect(() => {
     if (data) {
@@ -77,48 +101,35 @@ const Account = () => {
   return (
     <>
       <Navbar />
-        {user && (
-          <div id="account">
-            <div id="credentials">
-              <Typography variant="h3">Vaš účet</Typography>
-              <Typography variant="h6">
-                Uživatelské jméno: <br />
-                {user.username}
-              </Typography>
-              <Typography variant="h6">
-                E-mail: <br />
-                {user.email}
-              </Typography>
-              <Typography variant="h6">
-                Tel. číslo: <br />
-                {user.telNumber ? user.telNumber : "Není uvedeno"}
-              </Typography>
-              <div className="button">
-                  <Link to="/createAthr">
-                    <Button variant="contained" color="primary">
-                      Přidat Autora
-                    </Button>
-                  </Link>
-                </div>
-                <div className="button">
-                  <Link to="/createPub">
-                    <Button variant="contained" color="primary">
-                      Vytvořit položku
-                    </Button>
-                  </Link>
-                </div>
-            </div>
-            <div id="reservations">
-              {user.reservations && (
-                <DataGrid
-                  className="grid-height"
-                  rows={user.reservations}
-                  columns={columns}
-                />
-              )}
-            </div>
+      {user && (
+        <div id="account">
+          <div id="credentials">
+            <Typography variant="h3">Vaš účet</Typography>
+            <Typography variant="h6">
+              Uživatelské jméno: <br />
+              {user.username}
+            </Typography>
+            <Typography variant="h6">
+              E-mail: <br />
+              {user.email}
+            </Typography>
+            <Typography variant="h6">
+              Tel. číslo: <br />
+              {user.telNumber ? user.telNumber : "Není uvedeno"}
+            </Typography>
+            {isAdmin()}
           </div>
-        )}
+          <div id="reservations">
+            {user.reservations && (
+              <DataGrid
+                className="grid-height"
+                rows={user.reservations}
+                columns={columns}
+              />
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };

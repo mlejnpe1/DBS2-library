@@ -63,6 +63,7 @@ export const LOGIN = gql`
   mutation($name: String, $password: String) {
     login(userName: $name, password: $password) {
       id
+      username
       role {
         name
       }
@@ -88,22 +89,122 @@ export const REGISTER = gql`
 `;
 
 export const CREATE_AUTHOR = gql`
-mutation(
-  $name: String!
-  $secondName: String!
-  $lastName: String!
-){
-  createAuthor(
-    authorModel:{
-      name: $name
-      secondName: $secondName
-      lastName: $lastName
+  mutation($name: String!, $secondName: String!, $lastName: String!) {
+    createAuthor(
+      authorModel: { name: $name, secondName: $secondName, lastName: $lastName }
+    ) {
+      id
+      name
+      secondName
+      lastName
     }
-  ){
-    id
-    name
-    secondName
-    lastName
   }
-}
+`;
+
+export const CREATE_BOOK = gql`
+  mutation(
+    $name: String!
+    $authorId: Int!
+    $isbn: String!
+    $publisherId: Int!
+    $img: String!
+    $desc: String
+    $categoryId: Int!
+    $year: Int!
+    $fileExt: String!
+    $date: DateTime!
+    $quantity: Int!
+  ) {
+    createBook(
+      bookModel: {
+        authorId: $authorId
+        iSBN: $isbn
+        publication: {
+          description: $desc
+          name: $name
+          quantity: $quantity
+          yearOfPub: $year
+          categoryId: $categoryId
+          publisherId: $publisherId
+          image: {
+            img: $img
+            fileExtension: $fileExt
+            dateCreated: $date
+            dateModified: $date
+          }
+        }
+      }
+    ) {
+      iSBN
+      id
+      author {
+        lastName
+        id
+        name
+        secondName
+      }
+      publication {
+        bookId
+        categoryId
+        magazineId
+        name
+        publisher {
+          name
+        }
+        image {
+          img
+        }
+        description
+      }
+    }
+  }
+`;
+
+export const CREATE_MAGAZINE = gql`
+  mutation(
+    $issue: String!
+    $name: String!
+    $publisherId: Int!
+    $img: String!
+    $desc: String
+    $categoryId: Int!
+    $year: Int!
+    $fileExt: String!
+    $date: DateTime!
+    $quantity: Int!
+  ) {
+    createMagazine(
+      magazineModel: {
+        issue: $issue
+        publication: {
+          description: $desc
+          name: $name
+          quantity: $quantity
+          yearOfPub: $year
+          categoryId: $categoryId
+          publisherId: $publisherId
+          image: {
+            img: $img
+            fileExtension: $fileExt
+            dateCreated: $date
+            dateModified: $date
+          }
+        }
+      }
+    ) {
+      id
+      publication {
+        categoryId
+        magazineId
+        name
+        publisher {
+          name
+        }
+        image {
+          img
+        }
+        description
+      }
+    }
+  }
 `;

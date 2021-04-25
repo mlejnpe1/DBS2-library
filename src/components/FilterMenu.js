@@ -10,8 +10,8 @@ import {
   Button,
 } from "@material-ui/core";
 import "../assets/FilterMenu.css";
-import {LOAD_CATEGORIES} from '../graphql/queries';
-import {useQuery } from "@apollo/client";
+import { LOAD_CATEGORIES } from "../graphql/queries";
+import { useQuery } from "@apollo/client";
 
 function FillterMenu() {
   const [age, setAge] = React.useState("");
@@ -34,11 +34,11 @@ function FillterMenu() {
 
   useEffect(() => {
     if (data) {
-        setCategories(data.categories);
+      setCategories(data.categories);
     }
-      console.log(data);
-    }, [data]);
-  
+    console.log(data);
+  }, [data]);
+
   if (error) return `Error! ${error.message}`;
   if (loading) return "Loading...";
   return (
@@ -76,10 +76,13 @@ function FillterMenu() {
           value={age}
           onChange={handleSelectChange}
         >
-          {categories.map((category)=>{
-              return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
-            })
-          }
+          {categories.map((category) => {
+            return (
+              <MenuItem key={category.id} value={category.id}>
+                {category.name}
+              </MenuItem>
+            );
+          })}
         </Select>
         <FormControlLabel
           id="checkbox"

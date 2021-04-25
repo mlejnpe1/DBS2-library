@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   TextField,
@@ -8,6 +8,7 @@ import {
   IconButton,
   Button,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import "../assets/Form.css";
 import { useMutation } from "@apollo/client";
@@ -17,7 +18,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 const Login = () => {
-  const [values, setValues] = React.useState({
+  let history = useHistory();
+  const [values, setValues] = useState({
     password: "",
     showPassword: false,
   });
@@ -26,7 +28,7 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    console.log(event.target[1].value);
     const res = login({
       variables: {
         name: event.target[0].value,
@@ -43,10 +45,9 @@ const Login = () => {
         console.log(returningData);
         if (returningData && returningData.data.login) {
           sessionStorage.setItem("role", returningData.data.login.role.name);
-          sessionStorage.setItem("id", returningData.data.login.role.id);
+          sessionStorage.setItem("id", returningData.data.login.id);
           sessionStorage.setItem("username", returningData.data.login.username);
-          console.log(returningData);
-          console.log(document.cookie);
+          history.push("/");
         } else {
           console.log("Error");
         }

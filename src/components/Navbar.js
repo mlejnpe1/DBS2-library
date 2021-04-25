@@ -83,6 +83,21 @@ export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
+  const isLoggedIn = () => {
+    if (sessionStorage.getItem("username") !== null) {
+      return (
+        <Link
+          to={{
+            pathname: "/account",
+            state: { uId: sessionStorage.getItem("id") },
+          }}
+        >
+          <MenuItem onClick={handleMenuClose}>Účet</MenuItem>
+        </Link>
+      );
+    }
+  };
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -108,9 +123,7 @@ export default function Navbar(props) {
       <Link to="/register">
         <MenuItem onClick={handleMenuClose}>Registrace</MenuItem>
       </Link>
-      <Link to="/account">
-        <MenuItem onClick={handleMenuClose}>Účet</MenuItem>
-      </Link>
+      {isLoggedIn()}
     </Menu>
   );
 

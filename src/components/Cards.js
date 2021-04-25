@@ -100,38 +100,53 @@ function Cards() {
         <TabPanel value={value} index={0}>
           <div className={classes.root}>
             <GridList className={classes.gridList} cols={4}>
-              {publications.map((tile) => (
-                <GridListTile key={tile.id}>
-                  <img src={faker.image.image()} alt={tile.title} />
-                  <GridListTileBar
-                    title={tile.name}
-                    classes={{
-                      root: classes.titleBar,
-                      title: classes.title,
-                    }}
-                  />
-                </GridListTile>
-              ))}
+              {publications.map(
+                (tile) =>
+                  tile.bookId && (
+                    <GridListTile classname={classes.tile} key={tile.b}>
+                      <img src={tile.image?.img} alt={tile.title} />
+                      <Link
+                        to={{ pathname: "/detail", state: { id: tile.id } }}
+                      >
+                        <GridListTileBar
+                          title={tile.name}
+                          classes={{
+                            root: classes.titleBar,
+                            title: classes.title,
+                          }}
+                        />
+                      </Link>
+                    </GridListTile>
+                  )
+              )}
             </GridList>
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div className={classes.root}>
             <GridList className={classes.gridList} cols={4}>
-              {publications.map((tile) => (
-                <GridListTile key={tile.id}>
-                  <img src={faker.image.image()} alt={tile.title} />
-                  <Link to={{ pathname: "/detail", state: { id: tile.id } }}>
-                    <GridListTileBar
-                      title={tile.name}
-                      classes={{
-                        root: classes.titleBar,
-                        title: classes.title,
-                      }}
-                    />
-                  </Link>
-                </GridListTile>
-              ))}
+              {publications.map(
+                (tile) =>
+                  tile.magazineId && (
+                    <GridListTile classname={classes.tile} key={tile.id}>
+                      <img src={tile.image?.img} alt={tile.title} />
+                      <Link
+                        to={{
+                          pathname: "/detail",
+                          state: { id: tile.id },
+                        }}
+                      >
+                        <GridListTileBar
+                          title={tile.name}
+                          classes={{
+                            root: classes.titleBar,
+                            title: classes.title,
+                          }}
+                        />
+                      </Link>
+                    </GridListTile>
+                  )
+              )}
             </GridList>
           </div>
         </TabPanel>

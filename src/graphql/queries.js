@@ -105,3 +105,23 @@ export const LOAD_AUTHORS = gql`
     }
   }
 `;
+
+export const FILTER_PUBLICATIONS = gql`
+  query($id: Int!, $name: String!) {
+    publications(
+      where: {
+        and: [
+          { categoryId: { eq: $id } }
+          { name: { contains: $name } }
+          { quantity: { gt: 0 } }
+        ]
+      }
+    ) {
+      name
+      category {
+        name
+      }
+      quantity
+    }
+  }
+`;
