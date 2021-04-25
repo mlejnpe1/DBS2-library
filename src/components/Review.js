@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import "../assets/Review.css";
+import Button from "@material-ui/core/Button";
 import { StylesProvider, Typography } from "@material-ui/core";
+
+const depublicate = (event, id) => {};
 
 const Review = ({ user, date, text, id }) => {
   return (
@@ -20,6 +23,7 @@ const Review = ({ user, date, text, id }) => {
         <div>
           <Typography>{text}</Typography>
         </div>
+        <Button key={id} onClick={(event) => depublicate(event, id)}></Button>
       </div>
     </StylesProvider>
   );
