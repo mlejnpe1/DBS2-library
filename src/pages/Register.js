@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, TextField, InputLabel, Input, InputAdornment, IconButton, Button} from '@material-ui/core';
 import {Visibility, VisibilityOff} from '@material-ui/icons';
-import HomeButton from '../components/HomeButton';
 import '../assets/Form.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -31,7 +30,7 @@ const Register = () => {
     return (
         <>
         <Navbar/>
-            <div className="height container-wrapper">
+            <div className="form-height container-wrapper">
                 <div className="container">
                     <Typography className="h2" variant="h2">Create new Account</Typography>
                     <div className="item">

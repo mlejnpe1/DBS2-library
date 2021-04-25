@@ -7,8 +7,8 @@
   justify-content: center;
   align-items: center;
 }
-.height {
-  height: 100vh;
+.form-height{
+  height:100vh;
 }
 .container {
   width: 35vw;
@@ -22,6 +22,7 @@
 }
 .item {
   margin: 2.5% 0px 5% 0px !important;
+  width: 60%;
 }
 .width {
   width: 100%;

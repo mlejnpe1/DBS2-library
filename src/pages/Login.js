@@ -9,11 +9,12 @@ import {
   Button,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import HomeButton from "../components/HomeButton";
 import "../assets/Form.css";
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { LOGIN } from "../graphql/mutations";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const Login = () => {
   const [values, setValues] = React.useState({
@@ -60,7 +61,9 @@ const Login = () => {
   };
 
   return (
-    <div className="container-wrapper">
+    <>
+    <Navbar/>
+      <div className="form-height container-wrapper">
       <div className="container">
         <Typography className="h2" variant="h2">
           Login to your Account
@@ -121,8 +124,9 @@ const Login = () => {
           </InputLabel>
         </Link>
       </div>
-      <HomeButton />
-    </div>
+      </div>
+    <Footer/>
+    </>
   );
 };
 
