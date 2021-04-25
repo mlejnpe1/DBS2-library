@@ -68,8 +68,8 @@ const Account = () => {
   useEffect(() => {
     if (data) {
       setUser(data.user);
+      console.log(data);
     }
-    console.log(data);
   }, [data]);
 
   if (error) return `Error! ${error.message}`;
