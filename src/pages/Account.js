@@ -77,7 +77,6 @@ const Account = () => {
   return (
     <>
       <Navbar />
-      <StylesProvider injectFirst>
         {user && (
           <div id="account">
             <div id="credentials">
@@ -94,11 +93,13 @@ const Account = () => {
                 Tel. číslo: <br />
                 {user.telNumber ? user.telNumber : "Není uvedeno"}
               </Typography>
-              <Link to="/create">
-                <Button variant="contained" color="primary">
-                  Přidat položku
-                </Button>
-              </Link>
+                <div className="button">
+                  <Link to="/create">
+                    <Button variant="contained" color="primary">
+                      Vytvořit položku
+                    </Button>
+                  </Link>
+                </div>
             </div>
             <div id="reservations">
               {user.reservations && (
@@ -111,7 +112,6 @@ const Account = () => {
             </div>
           </div>
         )}
-      </StylesProvider>
     </>
   );
 };

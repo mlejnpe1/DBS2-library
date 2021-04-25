@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import HomeButton from "../components/HomeButton";
 import Review from "../components/Review";
 import { LOAD_BOOK } from "../graphql/queries";
 import { CREATE_REVIEW, CREATE_RESERVATION } from "../graphql/mutations";
@@ -79,7 +78,7 @@ const PublicationDetail = (props) => {
       <div id="mainContent">
         <div id="content">
           <div id="image">
-            <img src={faker.image.image()}></img>
+            <img src={faker.image.image()} alt="Publication Detail"></img>
           </div>
           <div id="detail">
             <Typography className="texts" variant="h4">
@@ -156,7 +155,6 @@ const PublicationDetail = (props) => {
           </Button>
         </form>
       </div>
-      <HomeButton />
       <Footer />
     </>
   );

@@ -24,14 +24,17 @@ const Register = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    }
 
 
     return (
         <>
         <Navbar/>
             <div className="form-height container-wrapper">
-                <div className="container">
+                <form className="container" onSubmit={(event) => handleSubmit(event)}>
                     <Typography className="h2" variant="h2">Create new Account</Typography>
                     <div className="item">
                         <InputLabel htmlFor="standard-adornment-password">User name</InputLabel>
@@ -69,11 +72,11 @@ const Register = () => {
                         />
                     </div>
                     <div className="button">
-                        <Button className="button" variant="contained" color="primary">
+                        <Button variant="contained" color="primary">
                             Register
                         </Button>
                     </div>
-                </div>
+                    </form>
                 <div className="link-wrapper">
                     <Link to="/login"><InputLabel class="link" htmlFor="standard-adornment-password"><Typography>Already registered ?</Typography></InputLabel></Link>
                 </div>
