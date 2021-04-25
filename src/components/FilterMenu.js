@@ -45,7 +45,7 @@ function FillterMenu() {
     <div className="fillter-container">
       <div className="fillter-wrapper">
         <Typography className="mobile-h5" variant="h5">
-          Lookin for something?
+          Hledáš něco?
         </Typography>
       </div>
       <div className="fillter-wrapper">
@@ -53,7 +53,7 @@ function FillterMenu() {
           <TextField
             size="small"
             id="outlined-basic"
-            label="Title"
+            label="Titul"
             variant="standard"
           />
         </div>
@@ -61,14 +61,14 @@ function FillterMenu() {
           <TextField
             size="small"
             id="outlined-basic"
-            label="Author"
+            label="Autor"
             variant="standard"
           />
         </div>
       </div>
       <div className="divider"></div>
       <div className="fillter-wrapper">
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <InputLabel id="demo-simple-select-label">Kategorie</InputLabel>
         <Select
           className="fillter-select"
           labelId="demo-simple-select-label"
@@ -92,10 +92,10 @@ function FillterMenu() {
               color="primary"
             />
           }
-          label="Available"
+          label="Dostupné"
         />
         <Button id="button" variant="contained" color="primary">
-          Filter Items
+          Filtrovat položky
         </Button>
       </div>
     </div>
