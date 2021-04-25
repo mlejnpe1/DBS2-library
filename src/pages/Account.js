@@ -10,18 +10,7 @@ import { DELETE_RESERVATION } from "../graphql/mutations";
 import { formatDate } from "../services/utils";
 import { Link } from "react-router-dom";
 
-const DeleteReservation = () => {
-  const [reservation] = useMutation(DELETE_RESERVATION); //TODO: reservationId
-  const { error, loading, data } = useQuery(LOAD_USER);
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    if (data) {
-      setUser(data.user);
-      console.log(data);
-    }
-  }, [data]);
-};
+const DeleteReservation = () => {};
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -69,7 +58,12 @@ const columns = [
 ];
 
 const Account = () => {
-  const { error, loading, data } = useQuery(LOAD_USER(2));
+  const [createReservation] = useMutation(DELETE_RESERVATION);
+  const { error, loading, data } = useQuery(LOAD_USER, {
+    variables: {
+      id: 2,
+    },
+  });
   const [user, setUser] = useState({});
   useEffect(() => {
     if (data) {
