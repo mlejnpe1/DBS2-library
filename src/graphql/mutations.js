@@ -32,6 +32,7 @@ export const CREATE_RESERVATION = gql`
     $dateTo: DateTime!
     $publicationId: Int!
     $userId: Int!
+    $returned: Boolean!
   ) {
     createReservation(
       reservationModel: {
@@ -39,6 +40,7 @@ export const CREATE_RESERVATION = gql`
         dateTo: $dateTo
         publicationId: $publicationId
         userId: $userId
+        bookReturned: $returned
       }
     ) {
       id
@@ -48,13 +50,28 @@ export const CREATE_RESERVATION = gql`
   }
 `;
 
-export const DELETE_RESERVATION = gql`
-  mutation($reservationId: Int!) {
-    deleteReservation(id: $reservationId) {
-      dateTo
-      publication {
-        name
+export const UPDATE_RESERVATION = gql`
+  mutation(
+    $id: ID!
+    $dateFrom: DateTime!
+    $dateTo: DateTime!
+    $publicationId: Int!
+    $userId: Int!
+    $returned: Boolean!
+  ) {
+    updateReservation(
+      reservationModel: {
+        id: $id
+        dateFrom: $dateFrom
+        dateTo: $dateTo
+        publicationId: $publicationId
+        userId: $userId
+        bookReturned: $returned
       }
+    ) {
+      id
+      dateFrom
+      dateTo
     }
   }
 `;
@@ -104,6 +121,21 @@ mutation(
     name
     secondName
     lastName
+  }
+}
+`;
+
+export const CREATE_PUBLISHER = gql`
+mutation(
+  $name: String!
+){
+  createPublisher(
+    publisherModel:{
+      name: $name
+    }
+  ){
+    id
+    name
   }
 }
 `;

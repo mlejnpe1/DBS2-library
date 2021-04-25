@@ -31,6 +31,7 @@ export const LOAD_USER = gql`
       email
       telNumber
       username
+
       reservations {
         id
         publicationId
@@ -40,6 +41,8 @@ export const LOAD_USER = gql`
         }
         dateFrom
         dateTo
+        debt
+        userId
       }
     }
   }
@@ -104,4 +107,23 @@ export const LOAD_AUTHORS = gql`
       lastName
     }
   }
+`;
+
+export const FILLTER = gql`
+{
+  publications(where: {
+    and: [
+      {categoryId: {eq: 3}},
+      {name: {contains: "oli"}},
+      {quantity: {gt: 0}}
+      ]
+    })
+    {
+      name
+      category{
+        name
+      }
+      quantity
+    }
+}
 `;
