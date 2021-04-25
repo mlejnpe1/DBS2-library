@@ -42,8 +42,11 @@ const Login = () => {
       .then((returningData) => {
         console.log(returningData);
         if (returningData && returningData.data.login) {
+          sessionStorage.setItem("role", returningData.data.login.role.name);
           console.log(returningData);
           console.log(document.cookie);
+        } else {
+          console.log("Error");
         }
       });
   };
@@ -62,70 +65,70 @@ const Login = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="form-height container-wrapper">
-      <div className="container">
-        <Typography className="h2" variant="h2">
-          Login to your Account
-        </Typography>
-        <form onSubmit={(event) => handleSubmit(event)}>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">
-              User name
+        <div className="container">
+          <Typography className="h2" variant="h2">
+            Login to your Account
+          </Typography>
+          <form onSubmit={(event) => handleSubmit(event)}>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                User name
+              </InputLabel>
+              <TextField
+                required
+                className="item width"
+                id="standart-basic"
+                placeholder="Required*"
+              ></TextField>
+            </div>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                Password
+              </InputLabel>
+              <Input
+                required
+                className="width"
+                id="standard-adornment-password"
+                placeholder="Required*"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </div>
+            <div className="button">
+              <Button
+                type="submit"
+                className="button"
+                variant="contained"
+                color="primary"
+              >
+                Login
+              </Button>
+            </div>
+          </form>
+        </div>
+        <div className="link-wrapper">
+          <Link to="/register">
+            <InputLabel class="link" htmlFor="standard-adornment-password">
+              <Typography>Dont have account yet?</Typography>
             </InputLabel>
-            <TextField
-              required
-              className="item width"
-              id="standart-basic"
-              placeholder="Required*"
-            ></TextField>
-          </div>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">
-              Password
-            </InputLabel>
-            <Input
-              required
-              className="width"
-              id="standard-adornment-password"
-              placeholder="Required*"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
-              onChange={handleChange("password")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </div>
-          <div className="button">
-            <Button
-              type="submit"
-              className="button"
-              variant="contained"
-              color="primary"
-            >
-              Login
-            </Button>
-          </div>
-        </form>
+          </Link>
+        </div>
       </div>
-      <div className="link-wrapper">
-        <Link to="/register">
-          <InputLabel class="link" htmlFor="standard-adornment-password">
-            <Typography>Dont have account yet?</Typography>
-          </InputLabel>
-        </Link>
-      </div>
-      </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };
