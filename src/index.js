@@ -26,7 +26,6 @@ const link = from([
   errorLink,
   new HttpLink({
     uri: "http://joseff-001-site1.ctempurl.com/graphql/",
-    credentials: "onclude",
   }),
 ]);
 

@@ -20,24 +20,24 @@ export const LOAD_PUBLICATIONS = gql`
   }
 `;
 
-export const LOAD_USER = (id) => gql`
-    query {
-        user(id:${id}) {
-        email
-        telNumber
-        username
-        reservations {
-            id
-            publicationId
-            publication {
-            id
-            name
-            }
-            dateFrom
-            dateTo
+export const LOAD_USER = gql`
+  query($id: Int!) {
+    user(id: $id) {
+      email
+      telNumber
+      username
+      reservations {
+        id
+        publicationId
+        publication {
+          id
+          name
         }
-        }
+        dateFrom
+        dateTo
+      }
     }
+  }
 `;
 
 export const LOAD_BOOK = gql`
@@ -73,10 +73,10 @@ export const LOAD_BOOK = gql`
   }
 `;
 export const LOAD_CATEGORIES = gql`
-query{
-  categories{
-    id
-    name
+  query {
+    categories {
+      id
+      name
+    }
   }
-}
 `;
