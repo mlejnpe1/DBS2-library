@@ -8,12 +8,15 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  NativeSelect,
+  FormControl,
+  FormHelperText,
 } from "@material-ui/core";
 import "../assets/FilterMenu.css";
-import { LOAD_CATEGORIES } from "../graphql/queries";
+import { LOAD_AUTHORS, LOAD_CATEGORIES } from "../graphql/queries";
 import { useQuery } from "@apollo/client";
 
-function FillterMenu() {
+function FillterMenu({ onFilter }) {
   const [age, setAge] = React.useState("");
   const [state, setState] = React.useState({
     checkedA: true,
@@ -21,7 +24,14 @@ function FillterMenu() {
     checkedF: true,
     checkedG: true,
   });
-  const { error, loading, data } = useQuery(LOAD_CATEGORIES);
+  const { error: errorCat, loading: loadingCat, data: dataCat } = useQuery(
+    LOAD_CATEGORIES
+  );
+  const {
+    error: errorAuthors,
+    loading: loadingAuthors,
+    data: dataAuthors,
+  } = useQuery(LOAD_AUTHORS);
   const [categories, setCategories] = useState([]);
 
   const handleSelectChange = (event) => {
@@ -33,16 +43,25 @@ function FillterMenu() {
   };
 
   useEffect(() => {
-    if (data) {
-      setCategories(data.categories);
+    if (dataCat) {
+      setCategories(dataCat.categories);
+      console.log(dataCat);
     }
-    console.log(data);
-  }, [data]);
+    if (dataAuthors) {
+      console.log(dataAuthors);
+    }
+  }, [dataCat, dataAuthors]);
 
-  if (error) return `Error! ${error.message}`;
-  if (loading) return "Loading...";
+  if (errorCat || errorAuthors)
+    return `Error! ${errorCat.message && "CategoryError:" + errorCat.message} ${
+      errorAuthors.message && "CategoryError:" + errorAuthors.message
+    }`;
+  if (loadingCat || loadingAuthors) return "Loading...";
   return (
-    <div className="fillter-container">
+    <form
+      onSubmit={(event) => onFilter(event, event.target)}
+      className="fillter-container"
+    >
       <div className="fillter-wrapper">
         <Typography className="mobile-h5" variant="h5">
           Hledáš něco?
@@ -57,14 +76,27 @@ function FillterMenu() {
             variant="standard"
           />
         </div>
-        <div className="fields">
-          <TextField
-            size="small"
-            id="outlined-basic"
-            label="Autor"
-            variant="standard"
-          />
-        </div>
+        <FormControl>
+          <InputLabel htmlFor="uncontrolled-native">Authors</InputLabel>
+          <NativeSelect
+            inputProps={{
+              name: "name",
+              id: "uncontrolled-native",
+            }}
+          >
+            {dataAuthors.authors.map((author) => {
+              return (
+                <option key={author.id} value={author.id}>
+                  {author.name + ""}
+                  {author.secondName
+                    ? " " + author.secondName + " " + author.lastName
+                    : " " + author.lastName}
+                </option>
+              );
+            })}
+          </NativeSelect>
+          <FormHelperText>Uncontrolled</FormHelperText>
+        </FormControl>
       </div>
       <div className="divider"></div>
       <div className="fillter-wrapper">
@@ -73,7 +105,6 @@ function FillterMenu() {
           className="fillter-select"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
           onChange={handleSelectChange}
         >
           {categories.map((category) => {
@@ -97,11 +128,11 @@ function FillterMenu() {
           }
           label="Dostupné"
         />
-        <Button id="button" variant="contained" color="primary">
+        <Button type="submit" id="button" variant="contained" color="primary">
           Filtrovat položky
         </Button>
       </div>
-    </div>
+    </form>
   );
 }
 

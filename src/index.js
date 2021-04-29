@@ -10,17 +10,21 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { history } from "./services/history";
+import "./assets/Cards.css";
 import { Router } from "react-router";
 import { routes } from "./router/routes";
 import { shouldInclude } from "@apollo/client/utilities";
 import { setContext } from "@apollo/client/link/context";
 
-const errorLink = onError(({ graphqlErrors, networkError }) => {
-  if (graphqlErrors) {
-    return graphqlErrors.map(({ message, location, path }) => {
-      return `GraphQL error ${message}`;
-    });
-  }
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors && typeof graphQLErrors !== "undefined")
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -44,7 +48,7 @@ const link = from([
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(link),
+  link: from([errorLink, authLink.concat(link)]),
   credentials: shouldInclude,
 });
 

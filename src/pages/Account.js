@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, makeStyles } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import "../assets/Account.css";
 import "../assets/Form.css";
@@ -9,7 +9,9 @@ import { LOAD_USER } from "../graphql/queries";
 import { UPDATE_RESERVATION, DELETE_RESERVATION } from "../graphql/mutations";
 import { formatDate } from "../services/utils";
 import { Link } from "react-router-dom";
+
 const Account = () => {
+  const classes = useStyles();
   const [updateReservation] = useMutation(UPDATE_RESERVATION);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -90,27 +92,33 @@ const Account = () => {
     if (sessionStorage.getItem("role") === "ADMIN") {
       return (
         <>
-          <div className="button">
-            <Link to="/createAthr">
-              <Button variant="contained" color="primary">
-                Přidat Autora
-              </Button>
-            </Link>
-          </div>
-          <div className="button">
-            <Link to="/createAthr">
-              <Button variant="contained" color="primary">
-                Přidat Autora
-              </Button>
-            </Link>
-          </div>
-          <div className="button">
-            <Link to="/createPub">
-              <Button variant="contained" color="primary">
-                Vytvořit položku
-              </Button>
-            </Link>
-          </div>
+          <Link to="/createAthr">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+            >
+              Přidat Autora
+            </Button>
+          </Link>
+          <Link to="/createPublisher">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+            >
+              Vytvořit vydavatelství
+            </Button>
+          </Link>
+          <Link to="/createPub">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+            >
+              Vytvořit položku
+            </Button>
+          </Link>
         </>
       );
     }
@@ -174,3 +182,10 @@ const Account = () => {
 };
 
 export default Account;
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    width: "100%",
+    margin: "5px",
+  },
+}));

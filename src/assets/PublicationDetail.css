@@ -2,29 +2,35 @@
   display: flex;
   flex-direction: column;
   height: auto;
-  padding: 50px 50px 100px 50px;
+  padding: 25px 25px 100px 25px;
 }
 
 #content {
   width: 100%;
   display: flex;
   height: auto;
+  justify-content: center;
   flex-direction: row;
 }
 
 #image img {
-  width: 400px;
+  max-width: 300px;
   height: auto;
 }
 
 #image {
   padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #detail {
   width: 60%;
   margin: 0px;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
   border-left-color: rgb(53, 53, 53);
   border-left-width: 1px;
   border-left-style: solid;
@@ -51,6 +57,6 @@
   align-self: flex-end;
   margin-top: 10px;
 }
-.button{
+.button {
   margin-top: 5%;
 }

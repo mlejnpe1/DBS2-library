@@ -48,19 +48,27 @@ export const LOAD_USER = gql`
   }
 `;
 
-export const LOAD_BOOK = gql`
+export const LOAD_PUBLICATION = gql`
   query($id: Int!) {
     publication(id: $id) {
       id
       name
       yearOfPub
       description
+      quantity
+      publisherId
+      bookId
+      magazineId
+      categoryId
       image {
         img
       }
       category {
         id
         name
+      }
+      magazine {
+        issue
       }
       reviews {
         text
@@ -70,7 +78,9 @@ export const LOAD_BOOK = gql`
         creationDate
       }
       book {
+        iSBN
         author {
+          id
           name
           secondName
           lastName
@@ -110,11 +120,12 @@ export const LOAD_AUTHORS = gql`
 `;
 
 export const FILTER_PUBLICATIONS = gql`
-  query($id: Int!, $name: String!) {
+  query($id: Int, $name: String, $authorId: Int) {
     publications(
       where: {
         and: [
           { categoryId: { eq: $id } }
+          { book: { authorId: { eq: $authorId } } }
           { name: { contains: $name } }
           { quantity: { gt: 0 } }
         ]

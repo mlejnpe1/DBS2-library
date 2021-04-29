@@ -11,9 +11,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-import { useQuery } from "@apollo/client";
-import { LOAD_PUBLICATIONS } from "../graphql/queries";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -35,6 +32,16 @@ const useStyles = makeStyles((theme) => ({
   titleBar: {
     background:
       "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  },
+  tabPanel: {
+    width: "100%",
+  },
+  img: {
+    maxHeight: "100%",
+    backgroundSize: "contain",
+    width: "auto",
+    display: "block",
+    margin: "auto",
   },
 }));
 
@@ -65,10 +72,9 @@ function a11yProps(index) {
   };
 }
 
-function Cards() {
+function Cards(props) {
   const classes = useStyles();
 
-  const { error, loading, data } = useQuery(LOAD_PUBLICATIONS);
   const [publications, setPublications] = useState([]);
 
   const [value, setValue] = useState(0);
@@ -77,13 +83,6 @@ function Cards() {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    if (data) {
-      setPublications(data.publications);
-    }
-    console.log(data);
-  }, [data]);
-  console.log(error);
   return (
     <StylesProvider injectFirst>
       <div className="cards">
@@ -97,53 +96,62 @@ function Cards() {
             <Tab label="Magazíny" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
+        <TabPanel className={classes.tabPanel} value={value} index={0}>
           <div className={classes.root}>
             <GridList className={classes.gridList} cols={4}>
-              {publications.map(
+              {props.data.publications.map(
                 (tile) =>
                   tile.bookId && (
-                    <GridListTile classname={classes.tile} key={tile.b}>
-                      <img src={tile.image?.img} alt={tile.title} />
-                      <Link
-                        to={{ pathname: "/detail", state: { id: tile.id } }}
-                      >
-                        <GridListTileBar
-                          title={tile.name}
-                          classes={{
-                            root: classes.titleBar,
-                            title: classes.title,
-                          }}
-                        />
-                      </Link>
+                    <GridListTile
+                      component={Link}
+                      to={{ pathname: "/detail", state: { id: tile.id } }}
+                      style={{ height: "300px" }}
+                      classname={classes.tile}
+                      key={tile.b}
+                    >
+                      <img
+                        className={classes.img}
+                        src={tile.image?.img}
+                        alt="../public/no-photo.png"
+                      />
+                      <GridListTileBar
+                        title={tile.name}
+                        classes={{
+                          root: classes.titleBar,
+                          title: classes.title,
+                        }}
+                      />
                     </GridListTile>
                   )
               )}
             </GridList>
           </div>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel className={classes.tabPanel} value={value} index={1}>
           <div className={classes.root}>
             <GridList className={classes.gridList} cols={4}>
-              {publications.map(
+              {props.data.publications.map(
                 (tile) =>
                   tile.magazineId && (
-                    <GridListTile classname={classes.tile} key={tile.id}>
-                      <img src={tile.image?.img} alt={tile.title} />
-                      <Link
-                        to={{
-                          pathname: "/detail",
-                          state: { id: tile.id },
+                    <GridListTile
+                      component={Link}
+                      to={{ pathname: "/detail", state: { id: tile.id } }}
+                      style={{ height: "300px" }}
+                      classname={classes.tile}
+                      key={tile.id}
+                    >
+                      <img
+                        className={classes.img}
+                        src={tile.image?.img}
+                        alt="Obrázek nenalezen"
+                      />
+                      <GridListTileBar
+                        title={tile.name}
+                        classes={{
+                          root: classes.titleBar,
+                          title: classes.title,
                         }}
-                      >
-                        <GridListTileBar
-                          title={tile.name}
-                          classes={{
-                            root: classes.titleBar,
-                            title: classes.title,
-                          }}
-                        />
-                      </Link>
+                      />
                     </GridListTile>
                   )
               )}

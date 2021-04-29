@@ -21,8 +21,11 @@ import {
   LOAD_PUBLISHERS,
 } from "../graphql/queries";
 import { useMutation, useQuery } from "@apollo/client";
+import { useHistory } from "react-router";
+import { Redirect } from "react-router-dom";
 
 function CreatePublication() {
+  const history = useHistory();
   const [createPublication] = useMutation(CREATE_BOOK);
   const [createMagazine] = useMutation(CREATE_MAGAZINE);
 
@@ -96,23 +99,22 @@ function CreatePublication() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const ext = "." + event.target[5].value.split(".")[1];
-    const renderedFile = await readFileAsync(event.target[5].files[0]);
-    console.log(renderedFile);
+    const ext = "." + event.target[3].value.split(".")[1];
+    const renderedFile = await readFileAsync(event.target[3].files[0]);
     if (value === "book") {
       const res = createPublication({
         variables: {
-          name: event.target[2].value,
-          authorId: parseInt(event.target[1].value),
-          isbn: event.target[0].value,
-          publisherId: parseInt(event.target[6].value),
+          name: event.target[0].value,
+          authorId: parseInt(event.target[10].value),
+          isbn: event.target[9].value,
+          publisherId: parseInt(event.target[4].value),
           img: renderedFile,
-          desc: event.target[7].value,
-          categoryId: parseInt(event.target[12].value),
-          year: parseInt(event.target[3].value),
+          desc: event.target[5].value,
+          categoryId: parseInt(event.target[11].value),
+          year: parseInt(event.target[1].value),
           fileExt: ext,
           date: new Date().toISOString(),
-          quantity: parseInt(event.target[4].value),
+          quantity: parseInt(event.target[2].value),
         },
       })
         .catch((res) => {
@@ -120,22 +122,28 @@ function CreatePublication() {
             return error.message;
           });
         })
-        .then((data) => {
-          console.log(data);
+        .then((creationData) => {
+          console.log(creationData);
+          if (creationData.data !== null) {
+            history.push({
+              pathname: "/detail",
+              state: { id: creationData.data.createBook.publication.id },
+            });
+          }
         });
     } else {
       const res = createMagazine({
         variables: {
-          name: event.target[2].value,
-          publisherId: parseInt(event.target[6].value),
+          name: event.target[0].value,
+          publisherId: parseInt(event.target[4].value),
           img: renderedFile,
-          desc: event.target[7].value,
-          issue: event.target[11].value,
-          categoryId: parseInt(event.target[12].value),
-          year: parseInt(event.target[3].value),
+          desc: event.target[5].value,
+          issue: event.target[9].value,
+          categoryId: parseInt(event.target[10].value),
+          year: parseInt(event.target[1].value),
           fileExt: ext,
           date: new Date().toISOString(),
-          quantity: parseInt(event.target[4].value),
+          quantity: parseInt(event.target[2].value),
         },
       })
         .catch((res) => {
@@ -143,8 +151,13 @@ function CreatePublication() {
             return error.message;
           });
         })
-        .then((data) => {
-          console.log(data);
+        .then((creationData) => {
+          if (creationData.data !== null) {
+            history.push({
+              pathname: "/detail",
+              state: { id: creationData.data.createMagazine.publication.id },
+            });
+          }
         });
     }
   }
@@ -157,11 +170,102 @@ function CreatePublication() {
   return (
     <>
       <NavBar />
-      <div className="container-wrapper">
-        <form onSubmit={(event) => handleSubmit(event)} className="container">
-          <Typography className="h2" variant="h2">
-            Vytváření položky
-          </Typography>
+      <form onSubmit={(event) => handleSubmit(event)} className="container">
+        <Typography style={{ textAlign: "center" }} className="h2" variant="h2">
+          Vytváření položky
+        </Typography>
+        <div className="item">
+          <InputLabel>Název položky</InputLabel>
+          <TextField
+            required
+            className="item width"
+            id="standart-basic"
+            placeholder="Required*"
+          />
+        </div>
+        <div className="item">
+          <InputLabel>Rok Vydání</InputLabel>
+          <TextField
+            required
+            type="number"
+            className="item width"
+            id="standart-basic"
+            placeholder="Required*"
+          />
+        </div>
+        <div className="item">
+          <InputLabel>Počet Kusů</InputLabel>
+          <TextField
+            required
+            type="number"
+            className="item width"
+            id="standart-basic"
+            placeholder="Required*"
+          />
+        </div>
+        <div className="item">
+          <InputLabel>Obrázek</InputLabel>
+          <Input
+            className="item width"
+            required
+            color="primary"
+            type="file"
+          ></Input>
+        </div>
+        <div className="item">
+          <InputLabel htmlFor="age-native-simple" className="item">
+            Vydavatelství
+          </InputLabel>
+          <Select
+            className="select-width"
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={publisherItem}
+            onChange={handlePublisherChange}
+          >
+            {publishers.map((publisher) => {
+              return (
+                <MenuItem key={publisher.id} value={publisher.id}>
+                  {publisher.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </div>
+        <div className="item">
+          <InputLabel>Popis</InputLabel>
+          <TextField
+            required
+            className="item width"
+            multiline
+            rows="4"
+            color="primary"
+            variant="outlined"
+            placeholder="Required*"
+          ></TextField>
+        </div>
+        <div className="item">
+          <InputLabel>Typ položky</InputLabel>
+          <RadioGroup
+            aria-label="type"
+            name="type"
+            value={value}
+            onChange={(event) => handleRadio(event)}
+            className="item"
+          >
+            <FormControlLabel
+              value="magazine"
+              control={<Radio color="primary" />}
+              label="Magazine"
+            />
+            <FormControlLabel
+              value="book"
+              control={<Radio color="primary" />}
+              label="Book"
+            />
+          </RadioGroup>
+        </div>
+        {value === "book" && (
           <div className="item">
             <InputLabel>ISBN</InputLabel>
             <TextField
@@ -173,6 +277,8 @@ function CreatePublication() {
               onChange={(event) => setIsbn(event.target.value)}
             />
           </div>
+        )}
+        {value === "book" && (
           <div className="item">
             <InputLabel htmlFor="age-native-simple" className="item">
               Autor
@@ -196,97 +302,8 @@ function CreatePublication() {
               })}
             </Select>
           </div>
-          <div className="item">
-            <InputLabel>Název položky</InputLabel>
-            <TextField
-              required
-              className="item width"
-              id="standart-basic"
-              placeholder="Required*"
-            />
-          </div>
-          <div className="item">
-            <InputLabel>Rok Vydání</InputLabel>
-            <TextField
-              required
-              type="number"
-              className="item width"
-              id="standart-basic"
-              placeholder="Required*"
-            />
-          </div>
-          <div className="item">
-            <InputLabel>Počet Kusů</InputLabel>
-            <TextField
-              required
-              type="number"
-              className="item width"
-              id="standart-basic"
-              placeholder="Required*"
-            />
-          </div>
-          <div className="item">
-            <InputLabel>Obrázek</InputLabel>
-            <Input
-              className="item width"
-              required
-              color="primary"
-              type="file"
-            ></Input>
-          </div>
-          <div className="item">
-            <InputLabel htmlFor="age-native-simple" className="item">
-              Vydavatelství
-            </InputLabel>
-            <Select
-              className="select-width"
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={publisherItem}
-              onChange={handlePublisherChange}
-            >
-              {publishers.map((publisher) => {
-                return (
-                  <MenuItem key={publisher.id} value={publisher.id}>
-                    {publisher.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </div>
-          <div className="item">
-            <InputLabel>Popis</InputLabel>
-            <TextField
-              required
-              className="item width"
-              multiline
-              rows="4"
-              color="primary"
-              variant="outlined"
-              placeholder="Required*"
-            ></TextField>
-          </div>
-          <div className="item">
-            <InputLabel>Typ položky</InputLabel>
-            <RadioGroup
-              aria-label="type"
-              name="type"
-              value={value}
-              onChange={(event) => handleRadio(event)}
-              className="item"
-            >
-              <FormControlLabel
-                value="magazine"
-                control={<Radio color="primary" />}
-                label="Magazine"
-              />
-              <FormControlLabel
-                value="book"
-                control={<Radio color="primary" />}
-                label="Book"
-              />
-            </RadioGroup>
-          </div>
+        )}
+        {value === "magazine" && (
           <div className="item">
             <InputLabel>Ročník</InputLabel>
             <TextField
@@ -294,35 +311,35 @@ function CreatePublication() {
               className="item width"
               id="standart-basic"
               placeholder="Required*"
-            />
+            ></TextField>
           </div>
-          <div className="item">
-            <InputLabel htmlFor="age-native-simple" className="item">
-              Kategorie
-            </InputLabel>
-            <Select
-              className="select-width"
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={categoryItem}
-              onChange={handleCategoryChange}
-            >
-              {categories.map((category) => {
-                return (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </div>
-          <div className="button">
-            <Button type="submit" variant="contained" color="primary">
-              Vytvořit položku
-            </Button>
-          </div>
-        </form>
-      </div>
+        )}
+        <div className="item">
+          <InputLabel htmlFor="age-native-simple" className="item">
+            Kategorie
+          </InputLabel>
+          <Select
+            className="select-width"
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={categoryItem}
+            onChange={handleCategoryChange}
+          >
+            {categories.map((category) => {
+              return (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </div>
+        <div className="button">
+          <Button type="submit" variant="contained" color="primary">
+            Vytvořit položku
+          </Button>
+        </div>
+      </form>
       <Footer />
     </>
   );

@@ -32,7 +32,7 @@ const Register = () => {
       variables: {
         username: e.target[0].value,
         email: e.target[1].value,
-        password: e.target[3].value,
+        password: values.password,
       },
     })
       .catch((res) => {
@@ -65,8 +65,12 @@ const Register = () => {
       <Navbar />
       <div className="form-height container-wrapper">
         <form className="container" onSubmit={(event) => handleSubmit(event)}>
-          <Typography className="h2" variant="h2">
-            Vytvořite si účet
+          <Typography
+            style={{ textAlign: "center" }}
+            className="h2"
+            variant="h2"
+          >
+            Zaregistrujte se
           </Typography>
           <div className="item">
             <InputLabel htmlFor="standard-adornment-password">

@@ -153,7 +153,6 @@ export const CREATE_BOOK = gql`
       }
     ) {
       iSBN
-      id
       author {
         lastName
         id
@@ -161,6 +160,7 @@ export const CREATE_BOOK = gql`
         secondName
       }
       publication {
+        id
         bookId
         categoryId
         magazineId
@@ -209,8 +209,8 @@ export const CREATE_MAGAZINE = gql`
         }
       }
     ) {
-      id
       publication {
+        id
         categoryId
         magazineId
         name
@@ -241,6 +241,106 @@ export const DELETE_RESERVATION = gql`
       dateTo
       publication {
         name
+      }
+    }
+  }
+`;
+
+export const DELETE_PUBLICATION = gql`
+  mutation($id: Int!) {
+    deletePublication(id: $id) {
+      name
+      id
+    }
+  }
+`;
+
+export const UPDATE_MAGAZINE = gql`
+  mutation(
+    $issue: String!
+    $name: String!
+    $publisherId: Int!
+    $desc: String
+    $categoryId: Int!
+    $year: Int!
+    $quantity: Int!
+  ) {
+    updateMagazine(
+      magazineModel: {
+        issue: $issue
+        publication: {
+          description: $desc
+          name: $name
+          quantity: $quantity
+          yearOfPub: $year
+          categoryId: $categoryId
+          publisherId: $publisherId
+        }
+      }
+    ) {
+      id
+      publication {
+        bookId
+        categoryId
+        magazineId
+        name
+        publisher {
+          name
+        }
+        image {
+          img
+        }
+        description
+      }
+    }
+  }
+`;
+
+export const UPDATE_BOOK = gql`
+  mutation(
+    $name: String!
+    $authorId: Int!
+    $isbn: String!
+    $publisherId: Int!
+    $desc: String
+    $categoryId: Int!
+    $year: Int!
+    $quantity: Int!
+  ) {
+    updateBook(
+      bookModel: {
+        authorId: $authorId
+        iSBN: $isbn
+        publication: {
+          description: $desc
+          name: $name
+          quantity: $quantity
+          yearOfPub: $year
+          categoryId: $categoryId
+          publisherId: $publisherId
+        }
+      }
+    ) {
+      iSBN
+      id
+      author {
+        lastName
+        id
+        name
+        secondName
+      }
+      publication {
+        bookId
+        categoryId
+        magazineId
+        name
+        publisher {
+          name
+        }
+        image {
+          img
+        }
+        description
       }
     }
   }

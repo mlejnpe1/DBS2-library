@@ -71,7 +71,11 @@ const Login = () => {
       <Navbar />
       <div className="form-height container-wrapper">
         <form className="container" onSubmit={(event) => handleSubmit(event)}>
-          <Typography className="h2" variant="h2">
+          <Typography
+            className="h2"
+            style={{ textAlign: "center" }}
+            variant="h2"
+          >
             Přihlašte se na svůj účet
           </Typography>
           <div className="item">
@@ -119,13 +123,13 @@ const Login = () => {
             </Button>
           </div>
         </form>
-      <div className="link-wrapper">
-        <Link to="/register">
-          <InputLabel class="link" htmlFor="standard-adornment-password">
-            <Typography>Ještě nemáš účet?</Typography>
-          </InputLabel>
-        </Link>
-      </div>
+        <div className="link-wrapper">
+          <Link to="/register">
+            <InputLabel class="link" htmlFor="standard-adornment-password">
+              <Typography>Ještě nemáš účet?</Typography>
+            </InputLabel>
+          </Link>
+        </div>
       </div>
       <Footer />
     </>

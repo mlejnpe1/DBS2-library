@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound";
 import PublicationDetail from "../pages/PublicationDetail";
 import CreatePublisher from "../pages/CreatePublisher";
 import CreateAuthor from "../pages/CreateAuthor";
+import UpdatePublication from "../pages/UpdatePublication";
 
 export const routes = (
   <BrowserRouter>
@@ -21,6 +22,7 @@ export const routes = (
       <Route exact path="/createPub" component={CreatePublication} />
       <Route exact path="/createAthr" component={CreateAuthor} />
       <Route exact path="/createPublisher" component={CreatePublisher} />
+      <Route exact path="/updatePub" component={UpdatePublication} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

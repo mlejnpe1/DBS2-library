@@ -2,47 +2,82 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Review from "../components/Review";
-import { LOAD_BOOK } from "../graphql/queries";
-import { CREATE_REVIEW, CREATE_RESERVATION } from "../graphql/mutations";
-import { Typography, Button, TextField } from "@material-ui/core";
-import faker from "faker";
+import { LOAD_PUBLICATION } from "../graphql/queries";
+import {
+  CREATE_REVIEW,
+  CREATE_RESERVATION,
+  DELETE_PUBLICATION,
+} from "../graphql/mutations";
+import { Typography, Button, TextField, makeStyles } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
+import { Link } from "react-router-dom";
 import { formatDate } from "../services/utils";
+import { useHistory } from "react-router-dom";
 
 const PublicationDetail = (props) => {
-  const idPublication = parseInt(props.location.state.id); //String with ID has to be parse into Int, otherwise useQuery cannot fetch data and fails
-  console.log(idPublication);
-  const { error, loading, isLoading, data } = useQuery(LOAD_BOOK, {
-    variables: { id: idPublication }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query
+  const classes = useStyles();
+  const history = useHistory();
+  const { id: pId } = props.location.state;
+
+  const [
+    deletePublication,
+    { error: errorDelete, data: dataDelete },
+  ] = useMutation(DELETE_PUBLICATION);
+  const { error, loading, isLoading, data } = useQuery(LOAD_PUBLICATION, {
+    variables: { id: parseInt(pId) }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query, also ALWAYS parse numbers into int
   });
+  const deleteItem = (e) => {
+    if (window.confirm("Chcete opravdu smazat vybranou položku?")) {
+      deletePublication({
+        variables: {
+          id: parseInt(pId),
+        },
+      })
+        .catch((res) => {
+          const errors = res.graphQLErrors.map((error) => {
+            return error.message;
+          });
+        })
+        .then((result) => {
+          if (result.data !== null) {
+            alert("Položka byla úspěšně odstraněna");
+            history.push("/");
+          }
+        });
+    }
+  };
 
   const [createReview] = useMutation(CREATE_REVIEW);
   const [createReservation] = useMutation(CREATE_RESERVATION);
-  const [publication, setPublication] = useState({});
   const [textReview, setTextReview] = useState("");
   const [reviews, setReviews] = useState([]);
 
-  const handleSubmit = (e, text, idPublication, uId) => {
-    e.preventDefault();
-    console.log(text);
-    const res = createReview({
-      variables: {
-        publicationId: idPublication,
-        text: text,
-        userId: uId,
-        date: new Date().toISOString(),
-      },
-    })
-      .catch((res) => {
-        const errors = res.graphQLErrors.map((error) => {
-          return error.message;
-        });
+  const handleSubmit = (e) => {
+    if (sessionStorage.getItem("id") !== null) {
+      e.preventDefault();
+      const uId = sessionStorage.getItem("id");
+      createReview({
+        variables: {
+          publicationId: parseInt(pId),
+          text: textReview,
+          userId: uId,
+          date: new Date().toISOString(),
+        },
       })
-      .then((review) => {
-        console.log(review);
-        setReviews([...reviews, review.data.createReview]);
-      });
+        .catch((res) => {
+          const errors = res.graphQLErrors.map((error) => {
+            return error.message;
+          });
+        })
+        .then((review) => {
+          console.log(review);
+          setReviews([...reviews, review.data.createReview]);
+        });
+    } else {
+      alert("Nejste přihlášen! Přihlaste se pro přídání recenze.");
+      history.push("/login");
+    }
   };
 
   const handleMonth = () => {
@@ -57,7 +92,7 @@ const PublicationDetail = (props) => {
       variables: {
         dateFrom: new Date().toISOString(),
         dateTo: handleMonth(),
-        publicationId: idPublication,
+        publicationId: parseInt(pId),
         userId: 6,
         returned: false,
       },
@@ -74,12 +109,11 @@ const PublicationDetail = (props) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-      if (reviews.length === 0) setReviews(data.publication.reviews);
+      setReviews(data.publication?.reviews);
     }
   }, [data, reviews]);
 
-  if (isLoading) return "Loading...";
+  if (isLoading || loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   return (
     <>
@@ -89,22 +123,45 @@ const PublicationDetail = (props) => {
           <div id="content">
             <div id="image">
               <img
-                src={data.publication.image.img}
+                src={data.publication.image?.img}
                 alt="Publication Detail"
               ></img>
             </div>
             <div id="detail">
+              {sessionStorage.getItem("role") === "ADMIN" && (
+                <div className={classes.edit}>
+                  <Link
+                    className={classes.editButton}
+                    to={{ pathname: "/updatePub", state: { id: pId } }}
+                  >
+                    <Button variant="outlined" color="primary">
+                      Upravit
+                    </Button>
+                  </Link>
+                  <Button
+                    onClick={(event) => deleteItem(event)}
+                    className={classes.editButton}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Smazat
+                  </Button>
+                </div>
+              )}
               <Typography className="texts" variant="h4">
                 {data.publication.name}
               </Typography>
               <Typography className="texts" variant="h6">
-                {data.publication.book?.author.name}{" "}
-                {data.publication.book?.author.secondName
-                  ? " " +
-                    data.publication.book?.author.secondName +
-                    " " +
-                    data.publication.book?.author.lastName
-                  : " " + data.publication.book?.author.lastName}
+                {!data.publication.book?.author.name
+                  ? data.publication.magazine?.issue
+                  : data.publication.book?.author.name}
+                {data.publication.book?.author.secondName &&
+                  (data.publication.book?.author.secondName
+                    ? " " +
+                      data.publication.book?.author.secondName +
+                      " " +
+                      data.publication.book?.author.lastName
+                    : " " + data.publication.book?.author.lastName)}
               </Typography>
               <Typography className="texts" variant="body1">
                 {data.publication.description}
@@ -146,12 +203,7 @@ const PublicationDetail = (props) => {
               </Typography>
             )}
           </div>
-          <form
-            onSubmit={(event) =>
-              handleSubmit(event, textReview, idPublication, 2)
-            }
-            id="insertReview"
-          >
+          <form onSubmit={(event) => handleSubmit(event)} id="insertReview">
             <TextField
               id="outlined-multiline-static"
               placeholder="Zadejte zde svoji recenzi"
@@ -180,3 +232,14 @@ const PublicationDetail = (props) => {
 };
 
 export default PublicationDetail;
+
+const useStyles = makeStyles((theme) => ({
+  edit: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+
+  editButton: {
+    marginLeft: "5px",
+  },
+}));
