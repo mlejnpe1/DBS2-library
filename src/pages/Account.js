@@ -7,8 +7,8 @@ import "../assets/Form.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_USER } from "../graphql/queries";
 import { UPDATE_RESERVATION, DELETE_RESERVATION } from "../graphql/mutations";
-import { formatDate } from "../services/utils";
 import { Link } from "react-router-dom";
+import moment from 'moment';
 
 const Account = () => {
   const classes = useStyles();
@@ -26,17 +26,17 @@ const Account = () => {
     {
       field: "dateFrom",
       headerName: "Od",
-      width: 150,
+      width: 250,
       valueGetter: (params) => {
-        return formatDate(params.row.dateFrom);
+        return moment(params.row.dateFrom).format('Do MMMM YYYY, h:mm:ss');
       },
     },
     {
       field: "dateTo",
       headerName: "Do",
-      width: 150,
+      width: 250,
       valueGetter: (params) => {
-        return formatDate(params.row.dateTo);
+        return moment(params.row.dateTo).format('Do MMMM YYYY, h:mm:ss');
       },
     },
     {
