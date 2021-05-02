@@ -9,7 +9,7 @@ import moment from 'moment';
 
 function DatePicker(props) {
     const [createReservation] = useMutation(CREATE_RESERVATION);
-    const [selectedDate, setSelectedDate] = useState(moment.locale().format());
+    const [selectedDate, setSelectedDate] = useState(moment().format());
   
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -20,7 +20,7 @@ function DatePicker(props) {
     console.log(props.pId);
     e.preventDefault();
     const dateFrom = moment(selectedDate).format();
-    const dateTo = moment(selectedDate).add(30, 'days').calendar().format();
+    const dateTo = moment(selectedDate).add(30, 'days'); //.calendar().format();
 
     const res = createReservation({
         variables: {

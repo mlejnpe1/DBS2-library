@@ -28,7 +28,7 @@ const Account = () => {
       headerName: "Od",
       width: 250,
       valueGetter: (params) => {
-        return moment(params.row.dateFrom).format('Do MMMM YYYY, h:mm:ss');
+        return moment(params.row.dateFrom).format('DD. MM. YY, HH:mm:ss');
       },
     },
     {
@@ -36,7 +36,7 @@ const Account = () => {
       headerName: "Do",
       width: 250,
       valueGetter: (params) => {
-        return moment(params.row.dateTo).format('Do MMMM YYYY, h:mm:ss');
+          return moment(params.row.dateTo).format('DD. MM. YY, HH:mm:ss');
       },
     },
     {
