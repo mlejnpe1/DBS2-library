@@ -58,10 +58,7 @@ function FillterMenu({ onFilter }) {
     }`;
   if (loadingCat || loadingAuthors) return "Loading...";
   return (
-    <form
-      onSubmit={(event) => onFilter(event, event.target)}
-      className="fillter-container"
-    >
+    <form onSubmit={(event) => onFilter(event)} className="fillter-container">
       <div className="fillter-wrapper">
         <Typography className="mobile-h5" variant="h5">
           Hledáš něco?
@@ -84,6 +81,7 @@ function FillterMenu({ onFilter }) {
               id: "uncontrolled-native",
             }}
           >
+            <option selected value="0" style={{ display: "none" }}></option>
             {dataAuthors.authors.map((author) => {
               return (
                 <option key={author.id} value={author.id}>
@@ -101,20 +99,21 @@ function FillterMenu({ onFilter }) {
       <div className="divider"></div>
       <div className="fillter-wrapper">
         <InputLabel id="demo-simple-select-label">Kategorie</InputLabel>
-        <Select
+        <NativeSelect
           className="fillter-select"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           onChange={handleSelectChange}
         >
+          <option selected value="0" style={{ display: "none" }}></option>
           {categories.map((category) => {
             return (
-              <MenuItem key={category.id} value={category.id}>
+              <option key={category.id} value={category.id}>
                 {category.name}
-              </MenuItem>
+              </option>
             );
           })}
-        </Select>
+        </NativeSelect>
         <FormControlLabel
           id="checkbox"
           control={

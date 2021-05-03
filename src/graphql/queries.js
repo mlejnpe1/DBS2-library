@@ -120,22 +120,42 @@ export const LOAD_AUTHORS = gql`
 `;
 
 export const FILTER_PUBLICATIONS = gql`
-  query($id: Int, $name: String, $authorId: Int) {
+  query(
+    $name: String!
+    $cat: String
+    $qua: Int!
+    $authorName: String!
+    $authorLastName: String!
+  ) {
     publications(
       where: {
         and: [
-          { categoryId: { eq: $id } }
-          { book: { authorId: { eq: $authorId } } }
           { name: { contains: $name } }
-          { quantity: { gt: 0 } }
+          { quantity: { gt: $qua } }
+          { category: { name: { contains: $cat } } }
+          { book: { author: { name: { contains: $authorName } } } }
+          { book: { author: { lastName: { contains: $authorLastName } } } }
         ]
       }
     ) {
       name
+      id
+      yearOfPub
+      bookId
+      quantity
+      magazineId
+      magazine {
+        issue
+      }
       category {
+        id
         name
       }
-      quantity
+      image {
+        fileExtension
+        id
+        img
+      }
     }
   }
 `;
