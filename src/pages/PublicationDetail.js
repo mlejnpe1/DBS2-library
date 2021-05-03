@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Review from "../components/Review";
+import DatePicker from "../components/DatePicker";
 import { LOAD_PUBLICATION } from "../graphql/queries";
 import {
   CREATE_REVIEW,
-  CREATE_RESERVATION,
-  DELETE_PUBLICATION,
+  DELETE_PUBLICATION
 } from "../graphql/mutations";
 import { Typography, Button, TextField, makeStyles } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
@@ -49,7 +49,6 @@ const PublicationDetail = (props) => {
   };
 
   const [createReview] = useMutation(CREATE_REVIEW);
-  const [createReservation] = useMutation(CREATE_RESERVATION);
   const [textReview, setTextReview] = useState("");
   const [reviews, setReviews] = useState([]);
 
@@ -80,38 +79,19 @@ const PublicationDetail = (props) => {
     }
   };
 
-  const handleMonth = () => {
-    var currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + 31);
-    return currentDate.toISOString();
-  };
-
-  const addReservation = (e) => {
-    e.preventDefault();
-    const res = createReservation({
-      variables: {
-        dateFrom: new Date().toISOString(),
-        dateTo: handleMonth(),
-        publicationId: parseInt(pId),
-        userId: 6,
-        returned: false,
-      },
-    })
-      .catch((res) => {
-        const errors = res.graphQLErrors.map((error) => {
-          return error.message;
-        });
-      })
-      .then((reservation) => {
-        console.log(reservation);
-      });
-  };
-
   useEffect(() => {
     if (data) {
       setReviews(data.publication?.reviews);
     }
   }, [data, reviews]);
+  
+  const isLoggedIn = () => {
+    if (sessionStorage.getItem("username") !== null) {
+      return (
+        <DatePicker pId={pId} />
+      );
+    }
+  };
 
   if (isLoading || loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
@@ -166,15 +146,7 @@ const PublicationDetail = (props) => {
               <Typography className="texts" variant="body1">
                 {data.publication.description}
               </Typography>
-              <div className="button">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={(event) => addReservation(event)}
-                >
-                  Vypůjčit
-                </Button>
-              </div>
+              {isLoggedIn()}
             </div>
           </div>
           <Typography variant="h4">Recenze</Typography>
