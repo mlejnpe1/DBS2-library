@@ -139,3 +139,21 @@ export const FILTER_PUBLICATIONS = gql`
     }
   }
 `;
+
+export const LOAD_RESERVATIONS = gql`
+  query{
+    reservations{
+      id
+      userId
+      dateFrom
+      dateTo
+      debt
+      user{
+        username
+      }
+      publication{
+        name
+      }
+    }
+  }
+`;

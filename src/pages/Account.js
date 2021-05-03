@@ -5,28 +5,30 @@ import { DataGrid } from "@material-ui/data-grid";
 import "../assets/Account.css";
 import "../assets/Form.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { LOAD_USER } from "../graphql/queries";
-import { UPDATE_RESERVATION, DELETE_RESERVATION } from "../graphql/mutations";
+import { LOAD_RESERVATIONS, LOAD_USER } from "../graphql/queries";
+import { UPDATE_RESERVATION } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import moment from 'moment';
 
 const Account = () => {
   const classes = useStyles();
   const [updateReservation] = useMutation(UPDATE_RESERVATION);
+  const {error: reservationError, loading: reservationLoading, data: reservationData} = useQuery(LOAD_RESERVATIONS);
+  console.log(reservationData);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
       field: "name",
       headerName: "Název",
-      width: 300,
+      width: 250,
       valueGetter: (params) => {
-        return params.row.publication.name;
+          return params.row.publication.name;
       },
     },
     {
       field: "dateFrom",
       headerName: "Od",
-      width: 250,
+      width: 175,
       valueGetter: (params) => {
         return moment(params.row.dateFrom).format('DD. MM. YY, HH:mm:ss');
       },
@@ -34,7 +36,7 @@ const Account = () => {
     {
       field: "dateTo",
       headerName: "Do",
-      width: 250,
+      width: 175,
       valueGetter: (params) => {
           return moment(params.row.dateTo).format('DD. MM. YY, HH:mm:ss');
       },
@@ -72,15 +74,30 @@ const Account = () => {
               console.log(bookReturnData);
             });
         };
-        return (
-          <Button variant="contained" color="primary" onClick={onClick}>
-            Vrátit
-          </Button>
-        );
+        if(sessionStorage.getItem('role') == "ADMIN"){
+          return (
+            <Button variant="contained" color="primary" onClick={onClick}>
+              Vrátit
+            </Button>
+          );
+        }
+        
       },
     },
   ];
-  const [createReservation] = useMutation(DELETE_RESERVATION);
+  if(sessionStorage.getItem('role')==="ADMIN"){
+    columns.splice(1,0,
+      {
+        field: "username",
+        headerName: "Uživ. jméno",
+        width: 200,
+        valueGetter: (params) => {
+          return params.row.user.username;
+      },
+      }
+    );
+  };
+
   console.log(sessionStorage.getItem("id"));
   const { error, loading, data } = useQuery(LOAD_USER, {
     variables: {
@@ -139,8 +156,8 @@ const Account = () => {
     return total;
   };
 
-  if (error) return `Error! ${error.message}`;
-  if (loading) return "Loading...";
+  if (error || reservationError) return `Error! ${error.message}`;
+  if (loading || reservationLoading) return "Loading...";
   return (
     <>
       <Navbar />
@@ -167,13 +184,13 @@ const Account = () => {
             {isAdmin()}
           </div>
           <div id="reservations">
-            {data.user.reservations && (
+            {
               <DataGrid
                 className="grid-height"
-                rows={data.user.reservations}
+                rows={ sessionStorage.getItem('role') === "ADMIN"? reservationData.reservations: data.user.reservations}
                 columns={columns}
               />
-            )}
+            }
           </div>
         </div>
       )}
