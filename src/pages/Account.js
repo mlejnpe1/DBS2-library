@@ -12,7 +12,7 @@ import moment from 'moment';
 
 const Account = () => {
   const classes = useStyles();
-  const [updateReservation] = useMutation(UPDATE_RESERVATION);
+  const [updateReservation, {error: updateError, loading: updateLoading}] = useMutation(UPDATE_RESERVATION);
   const {error: reservationError, loading: reservationLoading, data: reservationData} = useQuery(LOAD_RESERVATIONS);
   console.log(reservationData);
   const columns = [
@@ -60,9 +60,10 @@ const Account = () => {
               id: parseInt(params.row.id),
               dateFrom: params.row.dateFrom,
               dateTo: params.row.dateTo,
-              publicationId: params.row.publicationId,
+              publicationId: parseInt(params.row.publication.id),
               userId: params.row.userId,
               returned: true,
+              debt: parseFloat("0"),
             },
           })
             .catch((res) => {
@@ -74,7 +75,7 @@ const Account = () => {
               console.log(bookReturnData);
             });
         };
-        if(sessionStorage.getItem('role') == "ADMIN"){
+        if(sessionStorage.getItem('role') === "ADMIN"){
           return (
             <Button variant="contained" color="primary" onClick={onClick}>
               Vrátit
@@ -99,7 +100,7 @@ const Account = () => {
   };
 
   console.log(sessionStorage.getItem("id"));
-  const { error, loading, data } = useQuery(LOAD_USER, {
+  const { error: userError, loading: userLoading, data: userData } = useQuery(LOAD_USER, {
     variables: {
       id: parseInt(sessionStorage.getItem("id")),
     },
@@ -143,41 +144,44 @@ const Account = () => {
 
   const [user, setUser] = useState({});
   useEffect(() => {
-    if (data) {
-      setUser(data.user);
-      console.log(data);
+    if (userData) {
+      setUser(userData.user);
+      console.log(userData);
     }
-  }, [data]);
+  }, [userData]);
 
   const countDebt = () => {
     var total = 0;
 
-    data.user.reservations.map((reservation) => (total += reservation.debt));
+    userData.user.reservations.map((reservation) => (total += reservation.debt));
     return total;
   };
 
-  if (error || reservationError) return `Error! ${error.message}`;
-  if (loading || reservationLoading) return "Loading...";
+  if (userError) return `Error! ${userError.message}`;
+  if (reservationError) return `Error! ${reservationError.message}`;
+  if (updateError) return `Error! ${updateError.message}`;
+  if (userError) return `Error! ${userError.message}`;
+  if (userLoading || reservationLoading || updateLoading) return "Loading...";
   return (
     <>
       <Navbar />
       {user && (
         <div id="account">
           <div id="credentials">
-            <Typography variant="h3">Vaš účet</Typography>
-            <Typography variant="h6">
+            <Typography component={'span'} variant="h3">Vaš účet</Typography>
+            <Typography component={'span'} variant="h6">
               Uživatelské jméno: <br />
-              {data.user.username}
+              {userData.user.username}
             </Typography>
-            <Typography variant="h6">
+            <Typography component={'span'} variant="h6">
               E-mail: <br />
-              {data.user.email}
+              {userData.user.email}
             </Typography>
-            <Typography variant="h6">
+            <Typography component={'span'} variant="h6">
               Tel. číslo: <br />
-              {data.user.telNumber ? data.user.telNumber : "Není uvedeno"}
+              {userData.user.telNumber ? userData.user.telNumber : "Není uvedeno"}
             </Typography>
-            <Typography variant="h6">
+            <Typography component={'span'} variant="h6">
               Dluh: <br />
               {countDebt()}
             </Typography>
@@ -187,7 +191,7 @@ const Account = () => {
             {
               <DataGrid
                 className="grid-height"
-                rows={ sessionStorage.getItem('role') === "ADMIN"? reservationData.reservations: data.user.reservations}
+                rows={ sessionStorage.getItem('role') === "ADMIN"? reservationData.reservations: userData.user.reservations}
                 columns={columns}
               />
             }

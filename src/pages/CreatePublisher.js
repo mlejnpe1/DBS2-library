@@ -34,6 +34,7 @@ function CreateAuthor() {
       <div className="form-height container-wrapper">
         <form onSubmit={(event) => handleSubmit(event)} className="container">
           <Typography
+            component={'span'}
             style={{ textAlign: "center" }}
             className="h2"
             variant="h2"

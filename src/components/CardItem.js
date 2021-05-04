@@ -12,10 +12,11 @@ function CardItem(props) {
             src={props.cover}
           />
           <div className="cards-item-info">
-            <Typography variant="h5" className="cards-item-Title">
+            <Typography component={'span'} variant="h5" className="cards-item-Title">
               {props.title}
             </Typography>
             <Typography
+              component={'span'}
               variant="h7"
               className="cards-item-author"
               style={{ height: "50px" }}

@@ -19,15 +19,15 @@ const Review = ({ user, date, text, id }) => {
   return (
     <div key={id} className="review">
       <div id="info">
-        <Typography id="user" variant="subtitle2">
+        <Typography component={'span'} id="user" variant="subtitle2">
           {user}
         </Typography>
-        <Typography id="date" variant="subtitle2">
+        <Typography component={'span'} id="date" variant="subtitle2">
           {date}
         </Typography>
       </div>
       <div>
-        <Typography>{text}</Typography>
+        <Typography component={'span'}>{text}</Typography>
       </div>
       {sessionStorage.getItem("role") === "MODERATOR" && (
         <Button

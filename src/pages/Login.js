@@ -73,6 +73,7 @@ const Login = () => {
         <div className="container">
         <form onSubmit={(event) => handleSubmit(event)}>
           <Typography
+            component={'span'}
             className="h2"
             style={{ textAlign: "center" }}
             variant="h2"
@@ -127,7 +128,7 @@ const Login = () => {
         <div className="link-wrapper">
           <Link to="/register">
             <InputLabel class="link" htmlFor="standard-adornment-password">
-              <Typography>Ještě nemáš účet?</Typography>
+              <Typography component={'span'}>Ještě nemáš účet?</Typography>
             </InputLabel>
           </Link>
         </div>

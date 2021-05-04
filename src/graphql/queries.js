@@ -173,6 +173,7 @@ export const LOAD_RESERVATIONS = gql`
         username
       }
       publication{
+        id
         name
       }
     }

@@ -40,7 +40,7 @@ function CreateAuthor() {
             <form onSubmit={(event)=>
                 handleSubmit(event)
                 } className="container">
-            <Typography className="h2" variant="h2">Nový autor</Typography>
+            <Typography component={'span'} className="h2" variant="h2">Nový autor</Typography>
             <div className="item">
                 <InputLabel>Křestní jméno</InputLabel>
                 <TextField  required value={name}
