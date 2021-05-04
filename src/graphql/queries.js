@@ -75,6 +75,7 @@ export const LOAD_PUBLICATION = gql`
         user {
           username
         }
+        depublication
         creationDate
       }
       book {

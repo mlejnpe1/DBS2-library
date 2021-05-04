@@ -4,16 +4,27 @@ import Footer from "../components/Footer";
 import Review from "../components/Review";
 import DatePicker from "../components/DatePicker";
 import { LOAD_PUBLICATION } from "../graphql/queries";
-import {
-  CREATE_REVIEW,
-  DELETE_PUBLICATION
-} from "../graphql/mutations";
+import { CREATE_REVIEW, DELETE_PUBLICATION } from "../graphql/mutations";
 import { Typography, Button, TextField, makeStyles } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
 import { Link } from "react-router-dom";
 import { formatDate } from "../services/utils";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
+
+const authorName = (p) => {
+  if (p.book) {
+    var string = p.book.author.name + " ";
+    if (p.book.author.secondName !== null) {
+      string += p.book.author.secondName + " " + p.book.author.lastName;
+    } else {
+      string += " " + p.book.author.lastName;
+    }
+    return string;
+  }
+  return p.magazine.issue;
+};
 
 const PublicationDetail = (props) => {
   const classes = useStyles();
@@ -55,7 +66,7 @@ const PublicationDetail = (props) => {
   const handleSubmit = (e) => {
     if (sessionStorage.getItem("id") !== null) {
       e.preventDefault();
-      const uId = sessionStorage.getItem("id");
+      const uId = parseInt(sessionStorage.getItem("id"));
       createReview({
         variables: {
           publicationId: parseInt(pId),
@@ -83,13 +94,11 @@ const PublicationDetail = (props) => {
     if (data) {
       setReviews(data.publication?.reviews);
     }
-  }, [data, reviews]);
-  
+  }, [data]);
+
   const isLoggedIn = () => {
     if (sessionStorage.getItem("username") !== null) {
-      return (
-        <DatePicker pId={pId} />
-      );
+      return <DatePicker pId={pId} />;
     }
   };
 
@@ -132,16 +141,7 @@ const PublicationDetail = (props) => {
                 {data.publication.name}
               </Typography>
               <Typography className="texts" variant="h6">
-                {!data.publication.book?.author.name
-                  ? data.publication.magazine?.issue
-                  : data.publication.book?.author.name}
-                {data.publication.book?.author.secondName &&
-                  (data.publication.book?.author.secondName
-                    ? " " +
-                      data.publication.book?.author.secondName +
-                      " " +
-                      data.publication.book?.author.lastName
-                    : " " + data.publication.book?.author.lastName)}
+                {authorName(data.publication)}
               </Typography>
               <Typography className="texts" variant="body1">
                 {data.publication.description}
@@ -153,14 +153,18 @@ const PublicationDetail = (props) => {
           <div id="reviews">
             {reviews.length > 0 ? (
               reviews.map((review) => {
-                return (
-                  <Review
-                    key={review.id}
-                    user={review.user.username}
-                    date={formatDate(review.creationDate)}
-                    text={review.text}
-                  />
-                );
+                if (review.depublication === false) {
+                  return (
+                    <Review
+                      key={review.id}
+                      user={review.user.username}
+                      date={moment(review.creationDate).format(
+                        "DD. MM. YY, HH:mm:ss"
+                      )}
+                      text={review.text}
+                    />
+                  );
+                }
               })
             ) : (
               <Typography

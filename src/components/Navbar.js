@@ -3,18 +3,16 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import {
   Menu,
   MenuItem,
-  InputBase,
   Typography,
   AppBar,
   Toolbar,
   IconButton,
 } from "@material-ui/core";
-import {
-  Search,
-  AccountCircle,
-  NavigateBeforeRounded,
-} from "@material-ui/icons";
+import { AccountCircle } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGOUT } from "../graphql/mutations";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -79,21 +77,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar(props) {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const [logoutQuery] = useMutation(LOGOUT);
 
   const isLoggedIn = () => {
     if (sessionStorage.getItem("username") !== null) {
       return (
-        <Link
-          to={{
-            pathname: "/account",
-            state: { uId: sessionStorage.getItem("id") },
-          }}
-        >
-          <MenuItem onClick={handleMenuClose}>Účet</MenuItem>
-        </Link>
+        <>
+          <Link
+            to={{
+              pathname: "/account",
+              state: { uId: sessionStorage.getItem("id") },
+            }}
+          >
+            <MenuItem onClick={handleMenuClose}>Účet</MenuItem>
+          </Link>
+          <Link onClick={() => signOut()}>
+            <MenuItem onClick={handleMenuClose}>Odhlásit se</MenuItem>
+          </Link>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link to="/login">
+            <MenuItem onClick={handleMenuClose}>Přihlášení</MenuItem>
+          </Link>
+          <Link to="/register">
+            <MenuItem onClick={handleMenuClose}>Registrace</MenuItem>
+          </Link>
+        </>
       );
     }
   };
@@ -104,6 +120,13 @@ export default function Navbar(props) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const signOut = () => {
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("id");
+    sessionStorage.removeItem("username");
+    history.push("/");
   };
 
   const menuId = "primary-search-account-menu";
@@ -117,12 +140,6 @@ export default function Navbar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link to="/login">
-        <MenuItem onClick={handleMenuClose}>Přihlášení</MenuItem>
-      </Link>
-      <Link to="/register">
-        <MenuItem onClick={handleMenuClose}>Registrace</MenuItem>
-      </Link>
       {isLoggedIn()}
     </Menu>
   );

@@ -51,14 +51,12 @@ function Home() {
       },
     });
     setResults(filteredResults);
-    console.log(filteredResults);
   };
 
   if (errorData) return `Error while fetching data!: ${errorData.message}`;
   if (loadingData || loadingFilter) return "Loading...";
   return (
     <>
-      {console.log(results)}
       <Navbar />
       <div className="content">
         <FillterMenu onFilter={FilterData} />

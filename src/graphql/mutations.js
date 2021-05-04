@@ -177,6 +177,12 @@ export const CREATE_BOOK = gql`
   }
 `;
 
+export const LOGOUT = gql`
+  mutation {
+    logout
+  }
+`;
+
 export const CREATE_MAGAZINE = gql`
   mutation(
     $issue: String!

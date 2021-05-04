@@ -42,8 +42,7 @@ const authLink = setContext((_, { headers }) => {
 const link = from([
   errorLink,
   new HttpLink({
-   // uri: "http://joseff-001-site1.ctempurl.com/graphql/",
-      uri: "https://localhost:44307/graphql/"
+    uri: "http://joseff-001-site1.ctempurl.com/graphql/",
   }),
 ]);
 
