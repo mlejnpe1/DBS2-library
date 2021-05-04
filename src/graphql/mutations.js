@@ -51,29 +51,31 @@ export const CREATE_RESERVATION = gql`
 `;
 
 export const UPDATE_RESERVATION = gql`
-  mutation(
-    $id: ID!
-    $dateFrom: DateTime!
-    $dateTo: DateTime!
-    $publicationId: Int!
-    $userId: Int!
-    $returned: Boolean!
-  ) {
-    updateReservation(
-      reservationModel: {
-        id: $id
-        dateFrom: $dateFrom
-        dateTo: $dateTo
-        publicationId: $publicationId
-        userId: $userId
-        bookReturned: $returned
-      }
-    ) {
-      id
-      dateFrom
-      dateTo
+mutation(
+  $id: ID!
+  $dateFrom: DateTime!
+  $dateTo: DateTime!
+  $publicationId: Int!
+  $userId: Int!
+  $returned: Boolean!
+  $debt: Float!
+) {
+  updateReservation(
+    reservationModel: {
+      id: $id
+      dateFrom: $dateFrom
+      dateTo: $dateTo
+      publicationId: $publicationId
+      userId: $userId
+      bookReturned: $returned
+      debt: $debt      
     }
+  ) {
+    id
+    dateFrom
+    dateTo
   }
+}
 `;
 
 export const LOGIN = gql`

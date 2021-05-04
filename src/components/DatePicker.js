@@ -42,7 +42,7 @@ function DatePicker(props) {
 
   return (
     <div className="datepicker-wrapper">
-      <Typography variant="h5" color="primary">
+      <Typography component={"span"} variant="h5" color="primary">
         Přejete si vypůjčit?
       </Typography>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>

@@ -58,7 +58,7 @@ function FillterMenu({ onFilter }) {
   return (
     <form onSubmit={(event) => onFilter(event)} className="fillter-container">
       <div className="fillter-wrapper">
-        <Typography className="mobile-h5" variant="h5">
+        <Typography component={"span"} className="mobile-h5" variant="h5">
           Hledáš něco?
         </Typography>
       </div>
@@ -91,7 +91,6 @@ function FillterMenu({ onFilter }) {
               );
             })}
           </NativeSelect>
-          <FormHelperText>Uncontrolled</FormHelperText>
         </FormControl>
       </div>
       <div className="divider"></div>

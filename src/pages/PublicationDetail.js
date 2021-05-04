@@ -134,19 +134,19 @@ const PublicationDetail = (props) => {
                   </Button>
                 </div>
               )}
-              <Typography className="texts" variant="h4">
+              <Typography component={'span'} className="texts" variant="h4">
                 {data.publication.name}
               </Typography>
-              <Typography className="texts" variant="h6">
+              <Typography component={'span'} className="texts" variant="h6">
                 {authorName(data.publication)}
               </Typography>
-              <Typography className="texts" variant="body1">
+              <Typography component={'span'} className="texts" variant="body1">
                 {data.publication.description}
               </Typography>
               {isLoggedIn()}
             </div>
           </div>
-          <Typography variant="h4">Recenze</Typography>
+          <Typography component={'span'} variant="h4">Recenze</Typography>
           <div id="reviews">
             {reviews.length > 0 ? (
               reviews.map((review) => {
@@ -162,9 +162,11 @@ const PublicationDetail = (props) => {
                     />
                   );
                 }
+                return null;
               })
             ) : (
               <Typography
+              component={'span'}
                 style={{
                   margin: "20px 0px",
                   color: "grey",
@@ -174,7 +176,7 @@ const PublicationDetail = (props) => {
               >
                 Žádné recenze
               </Typography>
-            )}
+            )};
           </div>
           <form onSubmit={(event) => handleSubmit(event)} id="insertReview">
             <TextField

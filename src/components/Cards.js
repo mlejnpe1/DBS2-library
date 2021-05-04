@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import faker from "faker";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     color: "rgba(255, 255, 255, 0.54)",
   },
   title: {
-    color: theme.palette.primary.light,
+    color: theme.palette.primary,
   },
   titleBar: {
     background:
@@ -58,7 +57,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -112,7 +111,7 @@ function Cards(props) {
                       <img
                         className={classes.img}
                         src={tile.image?.img}
-                        alt="../public/no-photo.png"
+                        alt="nenalezen"
                       />
                       <GridListTileBar
                         key={tile.id}
@@ -144,7 +143,7 @@ function Cards(props) {
                       <img
                         className={classes.img}
                         src={tile.image?.img}
-                        alt="Obrázek nenalezen"
+                        alt="nenalezen"
                       />
                       <GridListTileBar
                         title={tile.name}

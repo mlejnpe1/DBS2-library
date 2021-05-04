@@ -66,6 +66,7 @@ const Register = () => {
         <div className="container">
           <form onSubmit={(event) => handleSubmit(event)}>
             <Typography
+              component={"span"}
               style={{ textAlign: "center" }}
               className="h2"
               variant="h2"

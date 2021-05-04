@@ -167,7 +167,7 @@ function CreatePublication() {
     <>
       <NavBar />
       <form onSubmit={(event) => handleSubmit(event)} className="container">
-        <Typography style={{ textAlign: "center" }} className="h2" variant="h2">
+        <Typography component={'span'} style={{ textAlign: "center" }} className="h2" variant="h2">
           Vytváření položky
         </Typography>
         <div className="item">

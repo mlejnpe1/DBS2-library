@@ -34,15 +34,15 @@ const Review = ({ id, pId, date, text, user }) => {
   return (
     <div key={id} className="review">
       <div id="info">
-        <Typography id="user" variant="subtitle2">
+        <Typography component={"span"} id="user" variant="subtitle2">
           {user.username}
         </Typography>
-        <Typography id="date" variant="subtitle2">
+        <Typography component={"span"} id="date" variant="subtitle2">
           {moment(date).format("DD. MM. YY, HH:mm:ss")}
         </Typography>
       </div>
       <div>
-        <Typography>{text}</Typography>
+        <Typography component={"span"}>{text}</Typography>
       </div>
       {sessionStorage.getItem("role") === "MODERATOR" && (
         <Button

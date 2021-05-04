@@ -155,7 +155,7 @@ export default function Navbar(props) {
       <AppBar position="static">
         <Toolbar>
           <Link to="/">
-            <Typography className={classes.title} variant="h6" noWrap>
+            <Typography component={'span'} className={classes.title} variant="h6" noWrap>
               Knihovna
             </Typography>
           </Link>

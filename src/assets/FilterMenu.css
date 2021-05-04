@@ -31,6 +31,9 @@
 #button {
   margin: 20% 0px 0px 0px;
 }
+.fields {
+  margin-bottom: 15px;
+}
 @media only screen and (max-width: 1024px) {
   .fillter-container {
     width: 35%;
