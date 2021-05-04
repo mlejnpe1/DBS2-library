@@ -63,8 +63,9 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <div className="form-height container-wrapper">
-        <form className="container" onSubmit={(event) => handleSubmit(event)}>
+      <div className="container-wrapper">
+        <div className="container">
+        <form onSubmit={(event) => handleSubmit(event)}>
           <Typography
             style={{ textAlign: "center" }}
             className="h2"
@@ -129,6 +130,7 @@ const Register = () => {
               <Typography>Jste již registrován?</Typography>
             </InputLabel>
           </Link>
+        </div>
         </div>
       </div>
       <Footer />

@@ -69,8 +69,9 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="form-height container-wrapper">
-        <form className="container" onSubmit={(event) => handleSubmit(event)}>
+      <div className="container-wrapper">
+        <div className="container">
+        <form onSubmit={(event) => handleSubmit(event)}>
           <Typography
             className="h2"
             style={{ textAlign: "center" }}
@@ -129,6 +130,7 @@ const Login = () => {
               <Typography>Ještě nemáš účet?</Typography>
             </InputLabel>
           </Link>
+        </div>
         </div>
       </div>
       <Footer />

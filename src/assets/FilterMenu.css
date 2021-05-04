@@ -1,11 +1,10 @@
 .fillter-container{
     display: flex;
     flex-direction: column;
-    justify-content: top;
+    justify-content: start;
     align-items: center;
     width: 20%;
     border-right: 1px solid rgba(63,81,181,255);
-    padding-top: 20px 0px 20px 0px;
     padding: 10px;
     background-color: rgba(236, 238, 248, 0.7);
 }
@@ -19,7 +18,7 @@
     width: 90%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: start;
     margin-left: 10%;
     padding: 7.5%;
 }
@@ -30,8 +29,7 @@
     margin-top: 5%;
 }
 #button{
-    align-self: center;
-    margin: 20% 20% 0px 0px;
+    margin: 20% 0px 0px 0px;
 }
 @media only screen and (max-width: 1024px){
     .fillter-container{

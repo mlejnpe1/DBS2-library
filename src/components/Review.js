@@ -2,7 +2,8 @@ import React from "react";
 import "../assets/Review.css";
 import Button from "@material-ui/core/Button";
 import { makeStyles, Typography } from "@material-ui/core";
-import { DEPUBLICATE } from "../graphql/mutations";
+import {useMutation} from "@apollo/client";
+//import { DEPUBLICATE } from "../graphql/mutations";
 
 const depublicate = (event, id) => {};
 
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Review = ({ user, date, text, id }) => {
-  const [depublicateQuery] = useMutation(DEPUBLICATE);
+  //const [depublicateQuery] = useMutation(DEPUBLICATE);
   const classes = useStyles();
   return (
     <div key={id} className="review">
