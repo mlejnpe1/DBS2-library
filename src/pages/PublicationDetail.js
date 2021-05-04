@@ -31,10 +31,7 @@ const PublicationDetail = (props) => {
   const history = useHistory();
   const { id: pId } = props.location.state;
 
-  const [
-    deletePublication,
-    { error: errorDelete, data: dataDelete },
-  ] = useMutation(DELETE_PUBLICATION);
+  const [deletePublication,{ error: errorDelete, data: dataDelete },] = useMutation(DELETE_PUBLICATION);
   const { error, loading, isLoading, data } = useQuery(LOAD_PUBLICATION, {
     variables: { id: parseInt(pId) }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query, also ALWAYS parse numbers into int
   });
