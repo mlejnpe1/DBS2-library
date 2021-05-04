@@ -40,7 +40,6 @@ function Home() {
     const category = e.target[2].options[categoryIndex].text;
     const quantity = e.target[3].value.checked === true ? 1 : 0;
     const authorLastName = getAuthorLastName(author);
-    console.log(author);
     getFilteredResults({
       variables: {
         cat: category,

@@ -12,7 +12,7 @@ import { AccountCircle } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGOUT } from "../graphql/mutations";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -77,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar(props) {
-  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -86,7 +85,7 @@ export default function Navbar(props) {
   const isLoggedIn = () => {
     if (sessionStorage.getItem("username") !== null) {
       return (
-        <>
+        <div>
           <Link
             to={{
               pathname: "/account",
@@ -95,21 +94,28 @@ export default function Navbar(props) {
           >
             <MenuItem onClick={handleMenuClose}>Účet</MenuItem>
           </Link>
-          <Link onClick={() => signOut()}>
-            <MenuItem onClick={handleMenuClose}>Odhlásit se</MenuItem>
-          </Link>
-        </>
+          <div>
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                signOut();
+              }}
+            >
+              Odhlásit se
+            </MenuItem>
+          </div>
+        </div>
       );
     } else {
       return (
-        <>
+        <div>
           <Link to="/login">
             <MenuItem onClick={handleMenuClose}>Přihlášení</MenuItem>
           </Link>
           <Link to="/register">
             <MenuItem onClick={handleMenuClose}>Registrace</MenuItem>
           </Link>
-        </>
+        </div>
       );
     }
   };
@@ -126,7 +132,7 @@ export default function Navbar(props) {
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("id");
     sessionStorage.removeItem("username");
-    history.push("/");
+    return <Redirect to={{ pathname: "/" }} />;
   };
 
   const menuId = "primary-search-account-menu";

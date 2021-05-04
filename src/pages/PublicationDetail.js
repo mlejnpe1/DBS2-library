@@ -9,9 +9,7 @@ import { Typography, Button, TextField, makeStyles } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
 import { Link } from "react-router-dom";
-import { formatDate } from "../services/utils";
 import { useHistory } from "react-router-dom";
-import moment from "moment";
 
 const authorName = (p) => {
   if (p.book) {
@@ -31,7 +29,10 @@ const PublicationDetail = (props) => {
   const history = useHistory();
   const { id: pId } = props.location.state;
 
-  const [deletePublication,{ error: errorDelete, data: dataDelete },] = useMutation(DELETE_PUBLICATION);
+  const [
+    deletePublication,
+    { error: errorDelete, data: dataDelete },
+  ] = useMutation(DELETE_PUBLICATION);
   const { error, loading, isLoading, data } = useQuery(LOAD_PUBLICATION, {
     variables: { id: parseInt(pId) }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query, also ALWAYS parse numbers into int
   });
@@ -78,8 +79,7 @@ const PublicationDetail = (props) => {
           });
         })
         .then((review) => {
-          console.log(review);
-          setReviews([...reviews, review.data.createReview]);
+          setReviews([...data.publication?.reviews, review.data.createReview]);
         });
     } else {
       alert("Nejste přihlášen! Přihlaste se pro přídání recenze.");
@@ -154,11 +154,11 @@ const PublicationDetail = (props) => {
                   return (
                     <Review
                       key={review.id}
-                      user={review.user.username}
-                      date={moment(review.creationDate).format(
-                        "DD. MM. YY, HH:mm:ss"
-                      )}
+                      id={review.id}
+                      pId={pId}
+                      date={review.creationDate}
                       text={review.text}
+                      user={review.user}
                     />
                   );
                 }

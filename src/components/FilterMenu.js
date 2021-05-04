@@ -45,10 +45,8 @@ function FillterMenu({ onFilter }) {
   useEffect(() => {
     if (dataCat) {
       setCategories(dataCat.categories);
-      console.log(dataCat);
     }
     if (dataAuthors) {
-      console.log(dataAuthors);
     }
   }, [dataCat, dataAuthors]);
 
@@ -81,7 +79,7 @@ function FillterMenu({ onFilter }) {
               id: "uncontrolled-native",
             }}
           >
-            <option selected value="0" style={{ display: "none" }}></option>
+            <option value="0"></option>
             {dataAuthors.authors.map((author) => {
               return (
                 <option key={author.id} value={author.id}>
@@ -101,11 +99,10 @@ function FillterMenu({ onFilter }) {
         <InputLabel id="demo-simple-select-label">Kategorie</InputLabel>
         <NativeSelect
           className="fillter-select"
-          labelId="demo-simple-select-label"
           id="demo-simple-select"
           onChange={handleSelectChange}
         >
-          <option selected value="0" style={{ display: "none" }}></option>
+          <option value="0"></option>
           {categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>

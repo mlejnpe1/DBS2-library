@@ -12,7 +12,6 @@ function CreateAuthor() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name);
     const res = createPublisher({
       variables: {
         name,
@@ -23,9 +22,7 @@ function CreateAuthor() {
           return error.message;
         });
       })
-      .then((data) => {
-        console.log(data);
-      });
+      .then((data) => {});
   };
 
   return (

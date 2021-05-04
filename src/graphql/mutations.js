@@ -351,3 +351,30 @@ export const UPDATE_BOOK = gql`
     }
   }
 `;
+
+export const DEPUBLICATE = gql`
+  mutation(
+    $id: ID!
+    $pId: Int!
+    $date: DateTime!
+    $text: String!
+    $user: Int!
+  ) {
+    updateReview(
+      reviewModel: {
+        id: $id
+        depublication: true
+        publicationId: $pId
+        creationDate: $date
+        text: $text
+        userId: $user
+      }
+    ) {
+      id
+      text
+      user {
+        username
+      }
+    }
+  }
+`;

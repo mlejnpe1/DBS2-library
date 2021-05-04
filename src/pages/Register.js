@@ -41,7 +41,6 @@ const Register = () => {
         });
       })
       .then((data) => {
-        console.log(data);
         if (data) {
           history.push("/login");
         }
@@ -65,72 +64,74 @@ const Register = () => {
       <Navbar />
       <div className="container-wrapper">
         <div className="container">
-        <form onSubmit={(event) => handleSubmit(event)}>
-          <Typography
-            style={{ textAlign: "center" }}
-            className="h2"
-            variant="h2"
-          >
-            Zaregistrujte se
-          </Typography>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">
-              Uživatelské jméno
-            </InputLabel>
-            <TextField
-              required
-              className="item width"
-              id="standart-basic"
-              placeholder="Požadováno*"
-            ></TextField>
+          <form onSubmit={(event) => handleSubmit(event)}>
+            <Typography
+              style={{ textAlign: "center" }}
+              className="h2"
+              variant="h2"
+            >
+              Zaregistrujte se
+            </Typography>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                Uživatelské jméno
+              </InputLabel>
+              <TextField
+                required
+                className="item width"
+                id="standart-basic"
+                placeholder="Požadováno*"
+              ></TextField>
+            </div>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                E-mailové adresa
+              </InputLabel>
+              <TextField
+                required
+                className="item width"
+                id="standart-basic"
+                placeholder="Požadováno*"
+              ></TextField>
+            </div>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                Heslo
+              </InputLabel>
+              <Input
+                required
+                className="width"
+                id="standard-adornment-password"
+                placeholder="Požadováno*"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </div>
+            <div className="button">
+              <Button type="submit" variant="contained" color="primary">
+                Registrovat
+              </Button>
+            </div>
+          </form>
+          <div className="link-wrapper">
+            <Link to="/login">
+              <InputLabel class="link" htmlFor="standard-adornment-password">
+                <Typography>Jste již registrován?</Typography>
+              </InputLabel>
+            </Link>
           </div>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">
-              E-mailové adresa
-            </InputLabel>
-            <TextField
-              required
-              className="item width"
-              id="standart-basic"
-              placeholder="Požadováno*"
-            ></TextField>
-          </div>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">Heslo</InputLabel>
-            <Input
-              required
-              className="width"
-              id="standard-adornment-password"
-              placeholder="Požadováno*"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
-              onChange={handleChange("password")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </div>
-          <div className="button">
-            <Button type="submit" variant="contained" color="primary">
-              Registrovat
-            </Button>
-          </div>
-        </form>
-        <div className="link-wrapper">
-          <Link to="/login">
-            <InputLabel class="link" htmlFor="standard-adornment-password">
-              <Typography>Jste již registrován?</Typography>
-            </InputLabel>
-          </Link>
-        </div>
         </div>
       </div>
       <Footer />

@@ -2,10 +2,9 @@ import React from "react";
 import "../assets/Review.css";
 import Button from "@material-ui/core/Button";
 import { makeStyles, Typography } from "@material-ui/core";
-import {useMutation} from "@apollo/client";
-//import { DEPUBLICATE } from "../graphql/mutations";
-
-const depublicate = (event, id) => {};
+import { useMutation } from "@apollo/client";
+import { DEPUBLICATE } from "../graphql/mutations";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,17 +12,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Review = ({ user, date, text, id }) => {
-  //const [depublicateQuery] = useMutation(DEPUBLICATE);
+const Review = ({ id, pId, date, text, user }) => {
+  const [depublicateQuery, { loading, data }] = useMutation(DEPUBLICATE);
+
+  const depublicate = (e) => {
+    if (window.confirm("Jste si jistí že chcete depublikovat ")) {
+      e.preventDefault();
+      depublicateQuery({
+        variables: {
+          id: parseInt(id),
+          pId: parseInt(pId),
+          date,
+          text,
+          userId: parseInt(user.userId),
+        },
+      });
+    }
+  };
+
   const classes = useStyles();
   return (
     <div key={id} className="review">
       <div id="info">
         <Typography id="user" variant="subtitle2">
-          {user}
+          {user.username}
         </Typography>
         <Typography id="date" variant="subtitle2">
-          {date}
+          {moment(date).format("DD. MM. YY, HH:mm:ss")}
         </Typography>
       </div>
       <div>
@@ -33,8 +48,7 @@ const Review = ({ user, date, text, id }) => {
         <Button
           className={classes.root}
           variant="outlined"
-          key={id}
-          onClick={(event) => depublicate(event, id)}
+          onClick={(event) => depublicate(event)}
         >
           Nahlásit
         </Button>

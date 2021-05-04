@@ -92,9 +92,6 @@ function CreatePublication() {
     if (author) {
       setAuthors(author.authors);
     }
-    console.log(publish);
-    console.log(category);
-    console.log(author);
   }, [category, publish, author]);
 
   async function handleSubmit(event) {
@@ -123,7 +120,6 @@ function CreatePublication() {
           });
         })
         .then((creationData) => {
-          console.log(creationData);
           if (creationData.data !== null) {
             history.push({
               pathname: "/detail",

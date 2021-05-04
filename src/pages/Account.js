@@ -8,13 +8,16 @@ import { useQuery, useMutation } from "@apollo/client";
 import { LOAD_RESERVATIONS, LOAD_USER } from "../graphql/queries";
 import { UPDATE_RESERVATION } from "../graphql/mutations";
 import { Link } from "react-router-dom";
-import moment from 'moment';
+import moment from "moment";
 
 const Account = () => {
   const classes = useStyles();
   const [updateReservation] = useMutation(UPDATE_RESERVATION);
-  const {error: reservationError, loading: reservationLoading, data: reservationData} = useQuery(LOAD_RESERVATIONS);
-  console.log(reservationData);
+  const {
+    error: reservationError,
+    loading: reservationLoading,
+    data: reservationData,
+  } = useQuery(LOAD_RESERVATIONS);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -22,7 +25,7 @@ const Account = () => {
       headerName: "Název",
       width: 250,
       valueGetter: (params) => {
-          return params.row.publication.name;
+        return params.row.publication.name;
       },
     },
     {
@@ -30,7 +33,7 @@ const Account = () => {
       headerName: "Od",
       width: 175,
       valueGetter: (params) => {
-        return moment(params.row.dateFrom).format('DD. MM. YY, HH:mm:ss');
+        return moment(params.row.dateFrom).format("DD. MM. YY, HH:mm:ss");
       },
     },
     {
@@ -38,7 +41,7 @@ const Account = () => {
       headerName: "Do",
       width: 175,
       valueGetter: (params) => {
-          return moment(params.row.dateTo).format('DD. MM. YY, HH:mm:ss');
+        return moment(params.row.dateTo).format("DD. MM. YY, HH:mm:ss");
       },
     },
     {
@@ -54,7 +57,6 @@ const Account = () => {
       disableClickEventBubbling: true,
       renderCell: (params) => {
         const onClick = () => {
-          console.log(params);
           const res = updateReservation({
             variables: {
               id: parseInt(params.row.id),
@@ -70,35 +72,29 @@ const Account = () => {
                 return error.message;
               });
             })
-            .then((bookReturnData) => {
-              console.log(bookReturnData);
-            });
+            .then((bookReturnData) => {});
         };
-        if(sessionStorage.getItem('role') == "ADMIN"){
+        if (sessionStorage.getItem("role") === "ADMIN") {
           return (
             <Button variant="contained" color="primary" onClick={onClick}>
               Vrátit
             </Button>
           );
         }
-        
       },
     },
   ];
-  if(sessionStorage.getItem('role')==="ADMIN"){
-    columns.splice(1,0,
-      {
-        field: "username",
-        headerName: "Uživ. jméno",
-        width: 200,
-        valueGetter: (params) => {
-          return params.row.user.username;
+  if (sessionStorage.getItem("role") === "ADMIN") {
+    columns.splice(1, 0, {
+      field: "username",
+      headerName: "Uživ. jméno",
+      width: 200,
+      valueGetter: (params) => {
+        return params.row.user.username;
       },
-      }
-    );
-  };
+    });
+  }
 
-  console.log(sessionStorage.getItem("id"));
   const { error, loading, data } = useQuery(LOAD_USER, {
     variables: {
       id: parseInt(sessionStorage.getItem("id")),
@@ -145,7 +141,6 @@ const Account = () => {
   useEffect(() => {
     if (data) {
       setUser(data.user);
-      console.log(data);
     }
   }, [data]);
 
@@ -187,7 +182,11 @@ const Account = () => {
             {
               <DataGrid
                 className="grid-height"
-                rows={ sessionStorage.getItem('role') === "ADMIN"? reservationData.reservations: data.user.reservations}
+                rows={
+                  sessionStorage.getItem("role") === "ADMIN"
+                    ? reservationData.reservations
+                    : data.user.reservations
+                }
                 columns={columns}
               />
             }

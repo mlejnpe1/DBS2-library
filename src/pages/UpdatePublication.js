@@ -32,7 +32,6 @@ import { Redirect } from "react-router";
 
 function UpdatePublication(props) {
   const { id: pId } = props.location.state;
-  console.log(pId);
   const [updateBook] = useMutation(UPDATE_BOOK);
   const [updateMagazine] = useMutation(UPDATE_MAGAZINE);
 
@@ -121,7 +120,6 @@ function UpdatePublication(props) {
       setYearOfPub(data.publication.yearOfPub);
       setDesc(data.publication.description);
       setIssue(data.publication.magazine?.issue);
-      console.log(data);
       if (data.publication.bookId === null) {
         setValue("magazine");
       } else {
@@ -178,9 +176,7 @@ function UpdatePublication(props) {
             return error.message;
           });
         })
-        .then((data) => {
-          console.log(data);
-        });
+        .then((data) => {});
     }
   }
 

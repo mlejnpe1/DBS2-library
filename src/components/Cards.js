@@ -106,8 +106,8 @@ function Cards(props) {
                       component={Link}
                       to={{ pathname: "/detail", state: { id: tile.id } }}
                       style={{ height: "300px" }}
-                      classname={classes.tile}
-                      key={tile.b}
+                      className={classes.tile}
+                      key={tile.id}
                     >
                       <img
                         className={classes.img}
@@ -115,6 +115,7 @@ function Cards(props) {
                         alt="../public/no-photo.png"
                       />
                       <GridListTileBar
+                        key={tile.id}
                         title={tile.name}
                         classes={{
                           root: classes.titleBar,
@@ -137,7 +138,7 @@ function Cards(props) {
                       component={Link}
                       to={{ pathname: "/detail", state: { id: tile.id } }}
                       style={{ height: "300px" }}
-                      classname={classes.tile}
+                      className={classes.tile}
                       key={tile.id}
                     >
                       <img
@@ -147,6 +148,7 @@ function Cards(props) {
                       />
                       <GridListTileBar
                         title={tile.name}
+                        key={tile.id}
                         classes={{
                           root: classes.titleBar,
                           title: classes.title,

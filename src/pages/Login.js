@@ -28,7 +28,6 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target[1].value);
     const res = login({
       variables: {
         name: event.target[0].value,
@@ -37,12 +36,10 @@ const Login = () => {
     })
       .catch((res) => {
         const errors = res.graphQLErrors.map((error) => {
-          console.log(error);
           return error.message;
         });
       })
       .then((returningData) => {
-        console.log(returningData);
         if (returningData && returningData.data.login) {
           sessionStorage.setItem("role", returningData.data.login.role.name);
           sessionStorage.setItem("id", returningData.data.login.id);
@@ -71,66 +68,71 @@ const Login = () => {
       <Navbar />
       <div className="container-wrapper">
         <div className="container">
-        <form onSubmit={(event) => handleSubmit(event)}>
-          <Typography
-            className="h2"
-            style={{ textAlign: "center" }}
-            variant="h2"
-          >
-            Přihlašte se na svůj účet
-          </Typography>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">
-              Uživatelské jméno
-            </InputLabel>
-            <TextField
-              required
-              className="item width"
-              id="standart-basic"
-              placeholder="Požadováno*"
-            ></TextField>
-          </div>
-          <div className="item">
-            <InputLabel htmlFor="standard-adornment-password">Heslo</InputLabel>
-            <Input
-              required
-              className="width"
-              id="standard-adornment-password"
-              placeholder="Požadováno*"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
-              onChange={handleChange("password")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </div>
-          <div className="button">
-            <Button
-              type="submit"
-              className="button"
-              variant="contained"
-              color="primary"
+          <form onSubmit={(event) => handleSubmit(event)}>
+            <Typography
+              className="h2"
+              style={{ textAlign: "center" }}
+              variant="h2"
             >
-              Přihlásit se
-            </Button>
+              Přihlašte se na svůj účet
+            </Typography>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                Uživatelské jméno
+              </InputLabel>
+              <TextField
+                required
+                className="item width"
+                id="standart-basic"
+                placeholder="Požadováno*"
+              ></TextField>
+            </div>
+            <div className="item">
+              <InputLabel htmlFor="standard-adornment-password">
+                Heslo
+              </InputLabel>
+              <Input
+                required
+                className="width"
+                id="standard-adornment-password"
+                placeholder="Požadováno*"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </div>
+            <div className="button">
+              <Button
+                type="submit"
+                className="button"
+                variant="contained"
+                color="primary"
+              >
+                Přihlásit se
+              </Button>
+            </div>
+          </form>
+          <div className="link-wrapper">
+            <Link to="/register">
+              <InputLabel
+                className="link"
+                htmlFor="standard-adornment-password"
+              >
+                <Typography>Ještě nemáš účet?</Typography>
+              </InputLabel>
+            </Link>
           </div>
-        </form>
-        <div className="link-wrapper">
-          <Link to="/register">
-            <InputLabel class="link" htmlFor="standard-adornment-password">
-              <Typography>Ještě nemáš účet?</Typography>
-            </InputLabel>
-          </Link>
-        </div>
         </div>
       </div>
       <Footer />
