@@ -12,7 +12,7 @@ import { AccountCircle } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGOUT } from "../graphql/mutations";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -81,6 +81,7 @@ export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const [logoutQuery] = useMutation(LOGOUT);
+  const history = useHistory();
 
   const isLoggedIn = () => {
     if (sessionStorage.getItem("username") !== null) {
@@ -132,7 +133,7 @@ export default function Navbar(props) {
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("id");
     sessionStorage.removeItem("username");
-    return <Redirect to={{ pathname: "/" }} />;
+    history.push("/");
   };
 
   const menuId = "primary-search-account-menu";
@@ -155,7 +156,12 @@ export default function Navbar(props) {
       <AppBar position="static">
         <Toolbar>
           <Link to="/">
-            <Typography component={'span'} className={classes.title} variant="h6" noWrap>
+            <Typography
+              component={"span"}
+              className={classes.title}
+              variant="h6"
+              noWrap
+            >
               Knihovna
             </Typography>
           </Link>

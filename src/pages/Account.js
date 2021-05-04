@@ -147,8 +147,8 @@ const Account = () => {
 
   const [user, setUser] = useState({});
   useEffect(() => {
-    if (data) {
-      setUser(data.user);
+    if (userData) {
+      setUser(userData.user);
     }
   }, [userData]);
 
