@@ -71,8 +71,10 @@ export const LOAD_PUBLICATION = gql`
         issue
       }
       reviews {
+        id
         text
         user {
+          id
           username
         }
         depublication
@@ -162,20 +164,21 @@ export const FILTER_PUBLICATIONS = gql`
 `;
 
 export const LOAD_RESERVATIONS = gql`
-  query{
-    reservations{
+  query {
+    reservations {
       id
       userId
       dateFrom
       dateTo
       debt
-      user{
+      user {
         username
       }
-      publication{
+      publication {
         id
         name
       }
+      bookReturned
     }
   }
 `;

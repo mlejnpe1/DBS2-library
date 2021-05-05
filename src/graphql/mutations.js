@@ -17,6 +17,7 @@ export const CREATE_REVIEW = gql`
       }
     ) {
       id
+      depublication
       user {
         username
       }
@@ -51,36 +52,36 @@ export const CREATE_RESERVATION = gql`
 `;
 
 export const UPDATE_RESERVATION = gql`
-mutation(
-  $id: ID!
-  $dateFrom: DateTime!
-  $dateTo: DateTime!
-  $publicationId: Int!
-  $userId: Int!
-  $returned: Boolean!
-  $debt: Float!
-) {
-  updateReservation(
-    reservationModel: {
-      id: $id
-      dateFrom: $dateFrom
-      dateTo: $dateTo
-      publicationId: $publicationId
-      userId: $userId
-      bookReturned: $returned
-      debt: $debt      
-    }
+  mutation(
+    $id: ID!
+    $dateFrom: DateTime!
+    $dateTo: DateTime!
+    $publicationId: Int!
+    $userId: Int!
+    $returned: Boolean!
+    $debt: Float!
   ) {
-    id
-    dateFrom
-    dateTo
+    updateReservation(
+      reservationModel: {
+        id: $id
+        dateFrom: $dateFrom
+        dateTo: $dateTo
+        publicationId: $publicationId
+        userId: $userId
+        bookReturned: $returned
+        debt: $debt
+      }
+    ) {
+      id
+      dateFrom
+      dateTo
+    }
   }
-}
 `;
 
 export const LOGIN = gql`
-  mutation($name: String, $password: String) {
-    login(userName: $name, password: $password) {
+  mutation($username: String!, $password: String!) {
+    login(userName: $username, password: $password) {
       id
       username
       role {
@@ -103,6 +104,15 @@ export const REGISTER = gql`
       id
       username
       email
+    }
+  }
+`;
+
+export const CREATE_CATEGORY = gql`
+  mutation($name: String!) {
+    createCategory(categoryModel: { name: $name }) {
+      id
+      name
     }
   }
 `;
@@ -265,6 +275,7 @@ export const DELETE_PUBLICATION = gql`
 
 export const UPDATE_MAGAZINE = gql`
   mutation(
+    $id: ID!
     $issue: String!
     $name: String!
     $publisherId: Int!
@@ -277,6 +288,7 @@ export const UPDATE_MAGAZINE = gql`
       magazineModel: {
         issue: $issue
         publication: {
+          id: $id
           description: $desc
           name: $name
           quantity: $quantity
@@ -288,6 +300,7 @@ export const UPDATE_MAGAZINE = gql`
     ) {
       id
       publication {
+        id
         bookId
         categoryId
         magazineId
@@ -306,6 +319,7 @@ export const UPDATE_MAGAZINE = gql`
 
 export const UPDATE_BOOK = gql`
   mutation(
+    $id: ID!
     $name: String!
     $authorId: Int!
     $isbn: String!
@@ -320,6 +334,7 @@ export const UPDATE_BOOK = gql`
         authorId: $authorId
         iSBN: $isbn
         publication: {
+          id: $id
           description: $desc
           name: $name
           quantity: $quantity
@@ -338,6 +353,7 @@ export const UPDATE_BOOK = gql`
         secondName
       }
       publication {
+        id
         bookId
         categoryId
         magazineId
@@ -355,28 +371,12 @@ export const UPDATE_BOOK = gql`
 `;
 
 export const DEPUBLICATE = gql`
-  mutation(
-    $id: ID!
-    $pId: Int!
-    $date: DateTime!
-    $text: String!
-    $user: Int!
-  ) {
-    updateReview(
-      reviewModel: {
-        id: $id
-        depublication: true
-        publicationId: $pId
-        creationDate: $date
-        text: $text
-        userId: $user
-      }
-    ) {
-      id
+  mutation($id: Int!) {
+    depublication(id: $id) {
+      userId
       text
-      user {
-        username
-      }
+      id
+      depublication
     }
   }
 `;

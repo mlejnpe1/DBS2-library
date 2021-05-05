@@ -49,11 +49,16 @@ function Home() {
         qua: quantity,
       },
     });
-    setResults(filteredResults);
   };
 
+  useEffect(() => {
+    if (filteredResults) {
+      setResults(filteredResults);
+    }
+  }, [filteredResults]);
+
   if (errorData) return `Error while fetching data!: ${errorData.message}`;
-  if (loadingData || loadingFilter) return "Loading...";
+  if (loadingData) return "Loading...";
   return (
     <>
       <Navbar />

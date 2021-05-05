@@ -29,8 +29,10 @@ import {
 } from "../graphql/queries";
 import { useMutation, useQuery } from "@apollo/client";
 import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 
 function UpdatePublication(props) {
+  const history = useHistory();
   const { id: pId } = props.location.state;
   const [updateBook] = useMutation(UPDATE_BOOK);
   const [updateMagazine] = useMutation(UPDATE_MAGAZINE);
@@ -40,6 +42,7 @@ function UpdatePublication(props) {
       id: parseInt(pId),
     },
   });
+
   const [createBook] = useMutation(CREATE_BOOK);
   const [createMagazine] = useMutation(CREATE_MAGAZINE);
 
@@ -133,6 +136,7 @@ function UpdatePublication(props) {
     if (value === "book") {
       updateBook({
         variables: {
+          id: parseInt(pId),
           name: name,
           authorId: parseInt(event.target[9].value),
           isbn: isbn,
@@ -148,20 +152,19 @@ function UpdatePublication(props) {
             return error.message;
           });
         })
-        .then((creationData) => {
-          if (creationData.data !== null)
-            return (
-              <Redirect
-                to={{
-                  pathname: "/detail",
-                  state: { id: creationData.data.createBook.id },
-                }}
-              />
-            );
+        .then((updateData) => {
+          if (updateData.data !== null) {
+            console.log(updateData);
+            history.push({
+              pathname: "/detail",
+              state: { id: updateData.data.updateBook.publication.id },
+            });
+          }
         });
     } else {
       updateMagazine({
         variables: {
+          id: parseInt(pId),
           name: name,
           publisherId: parseInt(event.target[3].value),
           desc: desc,
@@ -176,7 +179,15 @@ function UpdatePublication(props) {
             return error.message;
           });
         })
-        .then((data) => {});
+        .then((updateData) => {
+          if (updateData.data !== null) {
+            console.log(updateData);
+            history.push({
+              pathname: "/detail",
+              state: { id: updateData.data.updateMagazine.publication.id },
+            });
+          }
+        });
     }
   }
 
@@ -193,10 +204,10 @@ function UpdatePublication(props) {
   return (
     <>
       <NavBar />
-      <div className="container-wrapper">
+      <div className="container-wrapper" style={{ height: "auto" }}>
         <form onSubmit={(event) => handleSubmit(event)} className="container">
           <Typography
-            component={'span'}
+            component={"span"}
             style={{ textAlign: "center" }}
             className="h2"
             variant="h2"
@@ -356,9 +367,9 @@ function UpdatePublication(props) {
             >
               {categories.map((category) => {
                 return (
-                  <MenuItem key={category.id} value={category.id}>
+                  <option key={category.id} value={category.id}>
                     {category.name}
-                  </MenuItem>
+                  </option>
                 );
               })}
             </Select>

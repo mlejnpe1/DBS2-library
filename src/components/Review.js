@@ -15,23 +15,22 @@ const useStyles = makeStyles((theme) => ({
 const Review = ({ id, pId, date, text, user }) => {
   const [depublicateQuery, { loading, data }] = useMutation(DEPUBLICATE);
 
+  var hidden = false;
+
   const depublicate = (e) => {
     if (window.confirm("Jste si jistí že chcete depublikovat ")) {
       e.preventDefault();
       depublicateQuery({
         variables: {
           id: parseInt(id),
-          pId: parseInt(pId),
-          date,
-          text,
-          userId: parseInt(user.userId),
         },
       });
+      hidden = true;
     }
   };
 
   const classes = useStyles();
-  return (
+  return !hidden ? (
     <div key={id} className="review">
       <div id="info">
         <Typography component={"span"} id="user" variant="subtitle2">
@@ -53,6 +52,10 @@ const Review = ({ id, pId, date, text, user }) => {
           Nahlásit
         </Button>
       )}
+    </div>
+  ) : (
+    <div key={id} className="review">
+      Recenze byla Skryta
     </div>
   );
 };

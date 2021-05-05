@@ -3,18 +3,18 @@ import "../assets/Form.css";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Typography, InputLabel, TextField, Button } from "@material-ui/core";
-import { CREATE_PUBLISHER } from "../graphql/mutations";
 import { useMutation } from "@apollo/client";
+import { CREATE_CATEGORY } from "../graphql/mutations";
 import { useHistory } from "react-router";
 
-function CreateAuthor() {
+function CreateCategory() {
   const history = useHistory();
   const [name, setName] = useState("");
-  const [createPublisher, { error, data }] = useMutation(CREATE_PUBLISHER);
+  const [createCategory, { error, data }] = useMutation(CREATE_CATEGORY);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createPublisher({
+    createCategory({
       variables: {
         name,
       },
@@ -22,7 +22,7 @@ function CreateAuthor() {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && !error) {
       history.push("/account");
     }
   }, [data]);
@@ -38,7 +38,7 @@ function CreateAuthor() {
             className="h2"
             variant="h2"
           >
-            Nové vydavatelství
+            Nová Kategorie
           </Typography>
           <div className="item">
             <InputLabel>Název</InputLabel>
@@ -53,7 +53,7 @@ function CreateAuthor() {
           </div>
           <div className="button">
             <Button type="submit" variant="contained" color="primary">
-              Přidat vydavatelství
+              Přidat Kategorii
             </Button>
           </div>
         </form>
@@ -63,4 +63,4 @@ function CreateAuthor() {
   );
 }
 
-export default CreateAuthor;
+export default CreateCategory;

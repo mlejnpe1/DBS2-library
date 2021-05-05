@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { LOGIN } from "../graphql/mutations";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Alert from "@material-ui/lab/Alert";
 
 const Login = () => {
   let history = useHistory();
@@ -24,13 +25,14 @@ const Login = () => {
     showPassword: false,
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
   const [login] = useMutation(LOGIN);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const res = login({
       variables: {
-        name: event.target[0].value,
+        username: event.target[0].value,
         password: event.target[1].value,
       },
     })
@@ -46,7 +48,9 @@ const Login = () => {
           sessionStorage.setItem("username", returningData.data.login.username);
           history.push("/");
         } else {
-          console.log("Error");
+          setErrorMessage(
+            "Chyba! Špatné přihlašovací údaje, zkontrolujte své údaje."
+          );
         }
       });
   };
@@ -69,6 +73,9 @@ const Login = () => {
       <div className="container-wrapper">
         <div className="container">
           <form onSubmit={(event) => handleSubmit(event)}>
+            {errorMessage !== "" && (
+              <Alert severity="error">{errorMessage}</Alert>
+            )}
             <Typography
               component={"span"}
               className="h2"

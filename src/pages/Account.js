@@ -79,11 +79,19 @@ const Account = () => {
             .then((bookReturnData) => {});
         };
         if (sessionStorage.getItem("role") === "ADMIN") {
-          return (
-            <Button variant="contained" color="primary" onClick={onClick}>
-              Vrátit
-            </Button>
-          );
+          if (params.row.bookReturned) {
+            return (
+              <Button variant="outlined" color="primary">
+                Vráceno
+              </Button>
+            );
+          } else {
+            return (
+              <Button variant="contained" color="primary" onClick={onClick}>
+                Vrátit
+              </Button>
+            );
+          }
         }
       },
     },
@@ -138,6 +146,15 @@ const Account = () => {
               color="primary"
             >
               Vytvořit položku
+            </Button>
+          </Link>
+          <Link to="/createCat">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+            >
+              Vytvořit Kategorií
             </Button>
           </Link>
         </>
