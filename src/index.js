@@ -43,13 +43,13 @@ const link = from([
   errorLink,
   new HttpLink({
     uri: "http://joseff-001-site1.ctempurl.com/graphql/",
-    // uri: "https://localhost:44307/graphql/"
+    //uri: "https://localhost:5001/graphql/",
   }),
 ]);
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: from([errorLink, authLink.concat(link)]),
+  link: authLink.concat(link),
   credentials: "include",
 });
 

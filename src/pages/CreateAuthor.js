@@ -30,6 +30,7 @@ function CreateAuthor() {
     if (data && !error) {
       history.push("/account");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

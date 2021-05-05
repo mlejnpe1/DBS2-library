@@ -18,7 +18,7 @@ const Review = ({ id, pId, date, text, user }) => {
   var hidden = false;
 
   const depublicate = (e) => {
-    if (window.confirm("Jste si jistí že chcete depublikovat ")) {
+    if (window.confirm("Jste si jistí že chcete nahlásit tuto recenzi ")) {
       e.preventDefault();
       depublicateQuery({
         variables: {
