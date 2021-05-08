@@ -42,7 +42,7 @@ const authLink = setContext((_, { headers }) => {
 const link = from([
   errorLink,
   new HttpLink({
-    uri: "http://joseff-001-site1.ctempurl.com/graphql/",
+    uri: "https://library20210508124506.azurewebsites.net/graphql/",
     //uri: "https://localhost:5001/graphql/",
   }),
 ]);
