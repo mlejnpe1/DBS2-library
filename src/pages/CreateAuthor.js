@@ -36,7 +36,6 @@ function CreateAuthor() {
   return (
     <>
       <Navbar />
-      <div className="form-height container-wrapper">
         <form onSubmit={(event) => handleSubmit(event)} className="container">
           <Typography className="h2" variant="h2">
             Nový autor
@@ -78,7 +77,6 @@ function CreateAuthor() {
             </Button>
           </div>
         </form>
-      </div>
       <Footer />
     </>
   );

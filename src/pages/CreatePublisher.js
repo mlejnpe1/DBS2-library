@@ -31,7 +31,6 @@ function CreateAuthor() {
   return (
     <>
       <Navbar />
-      <div className="form-height container-wrapper">
         <form onSubmit={(event) => handleSubmit(event)} className="container">
           <Typography
             component={"span"}
@@ -58,7 +57,6 @@ function CreateAuthor() {
             </Button>
           </div>
         </form>
-      </div>
       <Footer />
     </>
   );
