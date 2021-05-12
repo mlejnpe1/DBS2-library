@@ -380,3 +380,14 @@ export const DEPUBLICATE = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+mutation ($id:Int!, $email: String!, $username: String!,$telnum: String!){
+  updateUser(id: $id,email:$email,username: $username,telNum:$telnum) {
+    username
+    id
+    telNumber
+    email
+  }
+}
+`;

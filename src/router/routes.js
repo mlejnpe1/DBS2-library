@@ -11,6 +11,7 @@ import CreatePublisher from "../pages/CreatePublisher";
 import CreateAuthor from "../pages/CreateAuthor";
 import UpdatePublication from "../pages/UpdatePublication";
 import CreateCategory from "../pages/CreateCategory";
+import EditAccount from "../pages/EditAccount";
 
 export const routes = (
   <BrowserRouter>
@@ -25,6 +26,7 @@ export const routes = (
       <Route exact path="/createPublisher" component={CreatePublisher} />
       <Route exact path="/updatePub" component={UpdatePublication} />
       <Route exact path="/createCat" component={CreateCategory} />
+      <Route exact path="/editAcc" component={EditAccount} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

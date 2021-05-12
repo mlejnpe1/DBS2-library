@@ -28,10 +28,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const client = new ApolloClient({
-  uri: "https://localhost:5001/graphql/",
-  //uri: "http://joseff-001-site1.ctempurl.com/graphql/",
+  //uri: "https://localhost:5001/graphql/",
+  uri: "https://library20210508124506.azurewebsites.net/graphql/",
   cache: new InMemoryCache(),
-  credentials: "include",
 });
 
 ReactDOM.render(

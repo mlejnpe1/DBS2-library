@@ -107,7 +107,6 @@ const Account = () => {
     });
   }
 
-  console.log(sessionStorage.getItem("id"));
   const { error: userError, loading: userLoading, data: userData } = useQuery(
     LOAD_USER,
     {
@@ -121,6 +120,15 @@ const Account = () => {
     if (sessionStorage.getItem("role") === "ADMIN") {
       return (
         <>
+        <Link to="/editAcc">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+            >
+              Upravit účet
+            </Button>
+          </Link>
           <Link to="/createAthr">
             <Button
               className={classes.button}
