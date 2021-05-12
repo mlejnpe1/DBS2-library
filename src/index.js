@@ -27,30 +27,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem("token");
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    },
-  };
-});
-
-const link = from([
-  errorLink,
-  new HttpLink({
-    //uri: "https://library20210508124506.azurewebsites.net/graphql",
-    //uri: "http://joseff-001-site1.ctempurl.com/graphql/",
-    uri: "https://localhost:5001/graphql/",
-  }),
-]);
-
 const client = new ApolloClient({
+  uri: "https://localhost:5001/graphql/",
+  //uri: "http://joseff-001-site1.ctempurl.com/graphql/",
   cache: new InMemoryCache(),
-  link: authLink.concat(link),
   credentials: "include",
 });
 
