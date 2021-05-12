@@ -11,11 +11,10 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 const Account = () => {
+  console.log(document.cookie);
   const classes = useStyles();
-  const [
-    updateReservation,
-    { error: updateError, loading: updateLoading },
-  ] = useMutation(UPDATE_RESERVATION);
+  const [updateReservation, { error: updateError, loading: updateLoading }] =
+    useMutation(UPDATE_RESERVATION);
   const {
     error: reservationError,
     loading: reservationLoading,
@@ -108,14 +107,15 @@ const Account = () => {
   }
 
   console.log(sessionStorage.getItem("id"));
-  const { error: userError, loading: userLoading, data: userData } = useQuery(
-    LOAD_USER,
-    {
-      variables: {
-        id: parseInt(sessionStorage.getItem("id")),
-      },
-    }
-  );
+  const {
+    error: userError,
+    loading: userLoading,
+    data: userData,
+  } = useQuery(LOAD_USER, {
+    variables: {
+      id: parseInt(sessionStorage.getItem("id")),
+    },
+  });
 
   const isAdmin = () => {
     if (sessionStorage.getItem("role") === "ADMIN") {

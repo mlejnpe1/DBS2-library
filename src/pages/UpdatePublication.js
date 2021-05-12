@@ -81,9 +81,11 @@ function UpdatePublication(props) {
   const [yearOfPub, setYearOfPub] = useState();
 
   const [authorItem, setAuthorItem] = useState("");
-  const { error: authorError, loading: authorLoading, data: author } = useQuery(
-    LOAD_AUTHORS
-  );
+  const {
+    error: authorError,
+    loading: authorLoading,
+    data: author,
+  } = useQuery(LOAD_AUTHORS);
   const [authors, setAuthors] = useState([]);
 
   const handleRadio = (event) => {
@@ -114,7 +116,7 @@ function UpdatePublication(props) {
     }
     if (data) {
       setPublication(data.publication);
-      setAuthorItem(data?.publication.book.author.id);
+      setAuthorItem(data?.publication.book?.author.id);
       setPublisherItem(data.publication.publisherId);
       setCategoryItem(data.publication.categoryId);
       setIsbn(data.publication.book?.iSBN);

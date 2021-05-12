@@ -29,10 +29,8 @@ const PublicationDetail = (props) => {
   const history = useHistory();
   const { id: pId } = props.location.state;
 
-  const [
-    deletePublication,
-    { error: errorDelete, data: dataDelete },
-  ] = useMutation(DELETE_PUBLICATION);
+  const [deletePublication, { error: errorDelete, data: dataDelete }] =
+    useMutation(DELETE_PUBLICATION);
   const { error, loading, isLoading, data } = useQuery(LOAD_PUBLICATION, {
     variables: { id: parseInt(pId) }, //If it still reporst undefined data, check whether variables name is matched with the ones passed in query, also ALWAYS parse numbers into int
   });
@@ -73,6 +71,7 @@ const PublicationDetail = (props) => {
           } else {
             setReviews([review.data.createReview]);
           }
+          setTextReview("");
         });
     } else {
       alert("Nejste přihlášen! Přihlaste se pro přídání recenze.");
@@ -88,6 +87,7 @@ const PublicationDetail = (props) => {
       alert("Položka byla úspěšně smazána");
       history.push("/");
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, dataDelete]);
 

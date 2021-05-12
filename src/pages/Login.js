@@ -133,7 +133,10 @@ const Login = () => {
           </form>
           <div className="link-wrapper">
             <Link to="/register">
-              <InputLabel class="link" htmlFor="standard-adornment-password">
+              <InputLabel
+                className="link"
+                htmlFor="standard-adornment-password"
+              >
                 <Typography component={"span"}>Ještě nemáš účet?</Typography>
               </InputLabel>
             </Link>
