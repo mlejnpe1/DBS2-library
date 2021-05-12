@@ -9,7 +9,7 @@ import { Typography, Button, TextField, makeStyles } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import "../assets/PublicationDetail.css";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const authorName = (p) => {
   if (p.book) {
@@ -42,18 +42,7 @@ const PublicationDetail = (props) => {
         variables: {
           id: parseInt(pId),
         },
-      })
-        .catch((res) => {
-          const errors = res.graphQLErrors.map((error) => {
-            return error.message;
-          });
-        })
-        .then((result) => {
-          if (result.data !== null) {
-            alert("Položka byla úspěšně odstraněna");
-            history.push("/");
-          }
-        });
+      });
     }
   };
 
@@ -95,7 +84,12 @@ const PublicationDetail = (props) => {
     if (data) {
       setReviews(data.publication?.reviews);
     }
-  }, [data]);
+    if (dataDelete) {
+      alert("Položka byla úspěšně smazána");
+      history.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, dataDelete]);
 
   const isLoggedIn = () => {
     if (sessionStorage.getItem("username") !== null) {
